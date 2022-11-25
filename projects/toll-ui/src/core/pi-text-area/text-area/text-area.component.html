@@ -1,0 +1,13 @@
+<div class="relative">
+    <ng-container *ngIf="!floatingLabel">
+        <ng-content select="label"></ng-content>
+    </ng-container>
+    <textarea [disabled]="disabled" [(ngModel)]="model" (ngModelChange)="onChange($event)" type="text" id="{{id}}"  class="{{(floatingLabel) ? '' : service.defaultCSS}} {{(floatingLabel === 'inline') ? service.floatingInlineInputCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineInputCSS : ''}}"
+           placeholder="{{floatingLabel? ' ' : placeholder}}"></textarea>
+    <label *ngIf="floatingLabel"
+           for="{{id}}"
+           class="z-[1] bg-white {{(floatingLabel === 'inline') ? service.floatingInlineLabelCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineLabelCSS : ''}}">
+        {{label}}
+    </label>
+</div>
+

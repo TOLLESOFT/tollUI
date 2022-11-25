@@ -1,0 +1,13 @@
+<button
+        [class.text-xs]="size === 'small'"
+        [class.text-base]="size === 'normal' || !size"
+        [class.text-xl]="size === 'large'"
+        [class.w-full]="block === ''"
+        [class.bg-blue-600]="type === 'primary' || !type"
+        [class.bg-red-600]="type === 'danger'"
+        [class.bg-sky-500]="type === 'info'"
+        [class.bg-amber-500]="type === 'warning'"
+        [disabled]="disabled || disabled === ''"
+        class="border disabled:bg-gray-400 text-white py-2 px-4 rounded-lg">
+    <ng-content></ng-content>
+</button>

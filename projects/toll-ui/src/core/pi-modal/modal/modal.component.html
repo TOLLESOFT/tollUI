@@ -1,0 +1,35 @@
+<div class="modal-content fixed inset-0" (click)="(backdropClose) ? close() : null">
+    <div class="flex flex-wrap content-center h-screen w-full">
+        <ng-container [ngSwitch]="contentType">
+            <div class="flex justify-center w-full h-auto" (click)="(backdropClose) ? close() : $event.stopPropagation()">
+               <div class="{{(modalSize === 'normal') ? 'w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12' : 'w-full md:w-11/12'}}">
+                   <div class="bg-white overflow-auto h-auto sm:max-h-96 ">
+                       <div class="p-5 h-full w-full">
+                           <ng-container *ngSwitchCase="'string'">
+                               <div [innerHTML]="content"></div>
+                           </ng-container>
+
+                           <ng-container *ngSwitchCase="'template'">
+                               <ng-container *ngTemplateOutlet="$any(content); context: context"></ng-container>
+                           </ng-container>
+
+                           <ng-container *ngSwitchCase="'component'">
+                               <ng-container *ngComponentOutlet="$any(content)"></ng-container>
+                           </ng-container>
+                       </div>
+                   </div>
+                   <div class="bg-white p-3 overflow-auto" *ngIf="buttons.length > 0">
+                       <ng-container *ngFor="let button of buttons">
+                           <button (click)="button.handle()" class="text-xs border border-indigo-700 text-white bg-indigo-700 py-2 px-4 rounded-lg"> {{button.label}} </button>
+                       </ng-container>
+                   </div>
+               </div>
+            </div>
+        </ng-container>
+    </div>
+<!--    <ng-container *ngIf="showCloseButton">-->
+<!--        <button (click)="close()" class="absolute top-1 right-1 z-[3]" aria-label="close">-->
+<!--            <img src="assets/close-btn.svg" class="w-10">-->
+<!--        </button>-->
+<!--    </ng-container>-->
+</div>
