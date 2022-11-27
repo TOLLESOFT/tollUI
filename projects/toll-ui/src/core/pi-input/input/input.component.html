@@ -2,11 +2,11 @@
     <ng-container *ngIf="!floatingLabel">
         <ng-content select="label"></ng-content>
     </ng-container>
-    <input [disabled]="disabled" [(ngModel)]="model" (ngModelChange)="onChange($event)" type="text" id="{{id}}"  class="{{(floatingLabel) ? '' : service.defaultCSS}} {{(floatingLabel === 'inline') ? service.floatingInlineInputCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineInputCSS : ''}}"
+    <input [disabled]="disabled" [(ngModel)]="model" (ngModelChange)="onChange($event)" type="{{type}}" id="{{id}}" class="{{(floatingLabel) ? '' : service.defaultCSS}} {{(floatingLabel === 'inline') ? service.floatingInlineInputCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineInputCSS : ''}}"
            placeholder="{{floatingLabel? ' ' : placeholder}}" />
     <label *ngIf="floatingLabel"
            for="{{id}}"
-           class="{{(floatingLabel === 'inline') ? service.floatingInlineLabelCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineLabelCSS : ''}}">
+           class="{{(floatingLabel === 'inline') ? service.floatingInlineLabelCSS : ''}} {{(floatingLabel === 'outline') ? service.floatingOutlineLabelCSS : ''}} z-0">
         {{label}}
     </label>
 </div>

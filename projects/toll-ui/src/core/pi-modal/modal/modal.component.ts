@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef, Type} from '@angular/core';
-import {ModalButtons} from "./modal-buttons";
-import {ModalRef} from "./modal-ref";
+import {ModalButtons} from "../modal-buttons";
+import {ModalRef} from "../modal-ref";
 
 @Component({
   selector: 'app-modal',

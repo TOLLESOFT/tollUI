@@ -1,0 +1,12 @@
+<ng-container *ngIf="show">
+    <div class="absolute inset-0 backdrop-blur-[10px] bg-gray-400/50 z-[99999]">
+        <div class="flex flex-wrap content-center h-full w-full">
+            <div class="flex justify-center w-full">
+                <div class="text-center">
+                    <i class="pi pi-spin pi-spinner text-blue-600 text-5xl"></i>
+                    <span class="block">{{loadingMessage}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

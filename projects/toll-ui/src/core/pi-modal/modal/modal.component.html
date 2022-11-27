@@ -8,7 +8,6 @@
                            <ng-container *ngSwitchCase="'string'">
                                <div [innerHTML]="content"></div>
                            </ng-container>
-
                            <ng-container *ngSwitchCase="'template'">
                                <ng-container *ngTemplateOutlet="$any(content); context: context"></ng-container>
                            </ng-container>

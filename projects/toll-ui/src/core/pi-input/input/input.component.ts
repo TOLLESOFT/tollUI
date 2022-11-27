@@ -18,6 +18,7 @@ import {BaseService} from "../../base.service";
 export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = '';
   @Input() label: string = '';
+  @Input() type: string = 'text';
   @Input() floatingLabel: 'inline' | 'outline' | undefined;
 
   @Input() model: string = '';

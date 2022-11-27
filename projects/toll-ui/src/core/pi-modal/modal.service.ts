@@ -1,13 +1,11 @@
 import {Injectable, Injector, TemplateRef, Type} from '@angular/core';
 import {ComponentPortal, PortalInjector} from "@angular/cdk/portal";
 import {Overlay, OverlayConfig} from "@angular/cdk/overlay";
-import {ModalComponent} from "./modal.component";
+import {ModalComponent} from "./modal/modal.component";
 import {Modal} from "./modal";
 import {ModalRef} from "./modal-ref";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ModalService {
   constructor(private overlay: Overlay, private injector: Injector) {}
 
