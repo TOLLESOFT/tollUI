@@ -1,0 +1,24 @@
+<input type="file" accept="{{accept}}" (change)="selectFiles($event)" hidden #imageItem [multiple]="type == 'multiple'">
+<div class="w-full border border-dashed border-gray-500 h-auto divide-y">
+  <div class="flex flex-wrap content-center justify-center w-full cursor-pointer h-36" (click)="imageItem.click()">
+    <ng-container *ngIf="files.length === 0">
+      <div class="text-center">
+        <i class="pi pi-images text-5xl text-gray-400"></i>
+        <span class="block cursor-pointer">click to select image</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="files.length > 0">
+      <div class="overflow-x-auto flex space-x-3 p-2 h-full items-center">
+        <div *ngFor="let image of files; let i = index" class="h-20 min-w-[5rem] bg-contain bg-center bg-no-repeat border relative" [ngStyle]="{'background-image': 'url('+ image.file +')'}">
+          <div class="absolute top-0 right-0">
+            <i class="bg-red-600 p-1 pi pi-times text-white text-base" (click)="clearImage(i);$event.stopImmediatePropagation()"></i>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+    <div class="text-blue-500 text-base w-full justify-between items-center flex px-3">
+        <span>{{files.length}} image{{files.length > 1 ? 's' : ''}} selected</span>
+        <i *ngIf="files.length > 0" (click)="clearImages()" class="pi pi-times text-red-600 text-xs cursor-pointer"></i>
+    </div>
+</div>

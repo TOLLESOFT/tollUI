@@ -1,32 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges
-} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'pi-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  selector: 'pi-icon-button',
+  templateUrl: './icon-button.component.html',
+  styleUrls: ['./icon-button.component.scss']
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class IconButtonComponent implements OnInit, OnChanges {
   @Input() size: 'extra small' | 'small' | 'normal' | 'large' | 'extra large' = 'normal';
   @Input() type: 'primary' | 'success' | 'danger' | 'warning' | 'info' = 'primary';
-  @Input() block: '' | undefined = undefined;
-  @Input() outline: '' | undefined = undefined;
-  @Input() disabled: '' | true | false = false;
   @Input() rounded: '' | 'full' = '';
-  xtra_small = 'py-2 px-3 text-xs font-medium items-center inline-flex space-x-2 justify-center';
-  small = 'py-2 px-3 text-sm font-medium items-center inline-flex space-x-2 justify-center';
-  normal = 'py-2.5 px-5 text-sm font-medium items-center inline-flex space-x-2 justify-center';
-  large = 'py-3 px-5 text-base font-medium items-center inline-flex space-x-2 justify-center';
-  xtra_large = 'py-3.5 px-6 text-base font-medium items-center inline-flex space-x-2 justify-center';
-
+  small = 'p-2.5 text-sm font-medium text-center';
+  normal = 'p-3 text-sm font-medium text-center';
+  large = 'p-3.5 text-base font-medium text-center';
   primary = '';
   success = '';
   danger = '';
@@ -36,13 +21,16 @@ export class ButtonComponent implements OnInit, OnChanges {
   success_outline = '';
   danger_outline = '';
   warning_outline = '';
+  @Input() icon = '';
+  @Input() disabled: '' | true | false = false;
+  @Input() outline: '' | undefined = undefined;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.button_state();
-   }
+  }
 
   ngOnInit(): void {
     this.button_state();
@@ -92,6 +80,5 @@ export class ButtonComponent implements OnInit, OnChanges {
     this.success_outline = `${(this.disabled || this.disabled === '') ? 'text-green-400 border-green-400 cursor-not-allowed':'text-green-700 hover:text-white border-green-700 hover:bg-green-800'} border focus:ring-4 focus:outline-none focus:ring-green-300`;
     this.danger_outline = `${(this.disabled || this.disabled === '') ? 'text-red-400 border-red-400 cursor-not-allowed':'text-red-600 hover:text-white border-red-600 hover:bg-red-700'} border focus:ring-4 focus:outline-none focus:ring-red-200`;
     this.warning_outline = `${(this.disabled || this.disabled === '') ? 'text-yellow-400 border-yellow-400 cursor-not-allowed':'text-yellow-500 hover:text-white border-yellow-500 hover:bg-yellow-600'} border focus:ring-4 focus:outline-none focus:ring-yellow-300`;
-
   }
 }

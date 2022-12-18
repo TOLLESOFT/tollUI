@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration development",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "postbuild": "npx tailwindcss projects/toll-ui/tailwind.config.js -i projects/toll-ui/src/core/style.scss -o dist/toll-ui/core/style.scss"

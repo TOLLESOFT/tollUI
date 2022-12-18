@@ -1,0 +1,29 @@
+<div [class.rounded-lg]="rounded" class="overflow-hidden border">
+    <ng-container *ngIf="headerTemplate">
+        <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!headerTemplate">
+        <ng-container *ngIf="title">
+            <span class="block p-4 text-2xl font-bold break-words">{{title}}</span>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="imageTemplate">
+        <ng-container *ngTemplateOutlet="imageTemplate"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!imageTemplate">
+        <ng-container *ngIf="image">
+            <img src="{{image}}" class="max-w-full h-auto">
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="bodyTemplate">
+        <ng-container *ngTemplateOutlet="bodyTemplate"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!bodyTemplate">
+        <ng-container *ngIf="subtitle">
+            <span class="block p-3 text-lg font-semibold break-words">{{subtitle}}</span>
+        </ng-container>
+        <ng-container *ngIf="body">
+            <p class="p-3 text-base break-words">{{body}}</p>
+        </ng-container>
+    </ng-container>
+</div>

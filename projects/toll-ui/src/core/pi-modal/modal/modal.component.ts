@@ -3,7 +3,7 @@ import {ModalButtons} from "../modal-buttons";
 import {ModalRef} from "../modal-ref";
 
 @Component({
-  selector: 'app-modal',
+  selector: 'pi-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
@@ -15,6 +15,7 @@ export class ModalComponent implements OnInit {
   backdropClose: boolean | undefined = true;
   buttons: Array<ModalButtons> = [];
   context: any;
+  modalCss = '';
   constructor(private ref: ModalRef) { }
 
   close() {
@@ -25,6 +26,16 @@ export class ModalComponent implements OnInit {
     this.content = this.ref.modal.content;
     this.modalSize = this.ref.modal.size;
     this.fullScreen = this.ref.modal.fullScreen;
+    if (this.fullScreen) {
+      this.modalCss = 'w-screen h-screen'
+    } else {
+      if (this.modalSize === 'large') {
+        this.modalCss = 'w-full md:w-11/12';
+      }
+      if (this.modalSize === 'normal') {
+        this.modalCss = 'w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12';
+      }
+    }
     if (this.ref.modal.backdropClose === undefined) {
       this.backdropClose = true;
     } else {
@@ -44,7 +55,6 @@ export class ModalComponent implements OnInit {
       };
     } else {
       this.contentType = 'component';
-      console.log(this.contentType, this.content);
     }
   }
 

@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ModalComponent} from "./modal/modal.component";
+import { DrawerComponent } from './drawer/drawer.component';
 import {OverlayModule} from "@angular/cdk/overlay";
-import {fromEvent} from "rxjs";
+
+
 
 @NgModule({
-  declarations: [ModalComponent],
-  exports: [ModalComponent],
+  declarations: [
+    DrawerComponent
+  ],
+  exports: [DrawerComponent],
   imports: [
     CommonModule,
     OverlayModule
   ]
 })
-export class PiModalModule {
-}
+export class PiDrawerModule { }

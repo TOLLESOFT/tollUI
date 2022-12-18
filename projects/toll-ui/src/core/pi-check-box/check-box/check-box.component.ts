@@ -15,7 +15,6 @@ import {BaseService} from "../../base.service";
   ]
 })
 export class CheckBoxComponent implements OnInit, ControlValueAccessor {
-  @Input() label: string = '';
   @Input() value: boolean = false;
   id = BaseService.uuid();
   onChange = (_: any) => {};

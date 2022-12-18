@@ -1,14 +1,14 @@
 import {Subject} from "rxjs";
+import {OverlayCloseEvent} from "../overlay-close-event";
 import {OverlayRef} from "@angular/cdk/overlay";
-import {Modal} from "./modal";
-import { OverlayCloseEvent } from "../overlay-close-event";
+import {Drawer} from "./drawer";
 
-export class ModalRef<R = any, T = any> {
+export class DrawerRef<R = any, T = any> {
     afterClosed$ = new Subject<OverlayCloseEvent<R | undefined | null>>();
 
     constructor(
         private overlay: OverlayRef,
-        public modal: Modal<T>
+        public drawer: Drawer<T>
     ) {
       overlay.backdropClick().subscribe({
         next: (_) => {

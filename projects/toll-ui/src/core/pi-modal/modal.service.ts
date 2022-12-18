@@ -12,8 +12,7 @@ export class ModalService {
   open<R = any, T = any>(modal: Modal<T>): ModalRef<R> {
     const configs = new OverlayConfig({
       hasBackdrop: true,
-      panelClass: ['modal', 'relative'],
-      backdropClass: ['backdrop-blur-[6px]', 'bg-gray-400/30', 'fixed', 'inset-0']
+      backdropClass: ['backdrop-blur-[6px]', 'bg-gray-400/30', 'fixed', 'inset-0', 'z-10']
     });
 
     const overlayRef = this.overlay.create(configs);
