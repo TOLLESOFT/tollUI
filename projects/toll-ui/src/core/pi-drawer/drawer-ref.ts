@@ -1,4 +1,4 @@
-import {Subject} from "rxjs";
+import {Subject, timer} from "rxjs";
 import {OverlayCloseEvent} from "../overlay-close-event";
 import {OverlayRef} from "@angular/cdk/overlay";
 import {Drawer} from "./drawer";
@@ -22,12 +22,15 @@ export class DrawerRef<R = any, T = any> {
     }
 
     private _close(type: 'backdropClick' | 'close', data: R | undefined | null) {
-        this.overlay.dispose();
-        this.afterClosed$.next({
-            type,
-            data
-        });
-
-        this.afterClosed$.complete();
+      this.afterClosed$.next({
+        type,
+        data
+      });
+      timer(200).subscribe({
+        next:(() => {
+          this.overlay.dispose();
+          this.afterClosed$.complete();
+        })
+      })
     }
 }

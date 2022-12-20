@@ -1,10 +1,31 @@
 import {Component, OnInit, TemplateRef, Type} from '@angular/core';
 import {DrawerRef} from "../drawer-ref";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-drawer',
   templateUrl: './drawer.component.html',
-  styleUrls: ['./drawer.component.scss']
+  styleUrls: ['./drawer.component.scss'],
+  animations: [
+    trigger('leftEnterLeave', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('200ms ease-in-out')
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in-out', style({ transform: 'translateX(-100%)' }))
+      ])
+    ]),
+    trigger('rightEnterLeave', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)' }),
+        animate('200ms 1ms ease-in-out')
+      ]),
+      transition(':leave', [
+        animate('200ms 1ms ease-in-out', style({ transform: 'translateX(100%)' }))
+      ])
+    ])
+  ]
 })
 export class DrawerComponent implements OnInit {
   contentType!: 'template' | 'string' | 'component';
@@ -14,6 +35,7 @@ export class DrawerComponent implements OnInit {
   backdropClose: boolean | undefined = true;
   context: any;
   title?: string;
+  open = true;
   constructor(private ref: DrawerRef) { }
 
   close() {

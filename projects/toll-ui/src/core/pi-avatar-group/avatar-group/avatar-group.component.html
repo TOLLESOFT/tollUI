@@ -1,0 +1,17 @@
+<div class="flex -space-x-4">
+    <ng-container *ngIf="displayCount > 0">
+        <ng-container *ngFor="let image of secondaryImages">
+            <img [class.rounded-full]="rounded === ''"
+                 [class.rounded]="rounded === null"
+                 [class.rounded-none]="rounded === 'none'" class="{{avatarGroupSize()}} border-2 border-white dark:border-gray-800" [src]="image" alt="">
+        </ng-container>
+        <div class="flex justify-center items-center w-10 h-10 text-xs font-medium text-white bg-gray-700 rounded-full border-2 border-white hover:bg-gray-600 dark:border-gray-800 cursor-default">+{{displayCount}}</div>
+    </ng-container>
+    <ng-container *ngIf="displayCount === 0">
+        <ng-container *ngFor="let image of images">
+            <img [class.rounded-full]="rounded === ''"
+                 [class.rounded]="rounded === null"
+                 [class.rounded-none]="rounded === 'none'" class="{{avatarGroupSize()}} border-2 border-white dark:border-gray-800" [src]="image" alt="">
+        </ng-container>
+    </ng-container>
+</div>

@@ -1,11 +1,21 @@
 import {Component, OnInit, TemplateRef, Type} from '@angular/core';
 import {ModalButtons} from "../modal-buttons";
 import {ModalRef} from "../modal-ref";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'pi-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  animations: [trigger('enterLeave', [
+    transition(':enter', [
+      style({ transform: 'scale(0%)' }),
+      animate('250ms ease-in')
+    ]),
+    transition(':leave', [
+      animate('100ms ease-out', style({ transform: 'scale(0%)' }))
+    ])
+  ])]
 })
 export class ModalComponent implements OnInit {
   contentType!: 'template' | 'string' | 'component';
@@ -16,7 +26,14 @@ export class ModalComponent implements OnInit {
   buttons: Array<ModalButtons> = [];
   context: any;
   modalCss = '';
-  constructor(private ref: ModalRef) { }
+  open = true;
+  constructor(private ref: ModalRef) {
+    this.ref.afterClosed$.subscribe({
+      next: (() => {
+        this.open = false;
+      })
+    })
+  }
 
   close() {
     this.ref.close(null);
