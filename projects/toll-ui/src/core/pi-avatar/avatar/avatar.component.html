@@ -2,20 +2,26 @@
     <ng-container *ngIf="image">
         <img [class.rounded-full]="rounded === ''"
              [class.rounded]="rounded === null"
-             [class.rounded-none]="rounded === 'none'" class="{{avatarSize()}}" [src]="image" alt="pi-avatar">
+             [class.rounded-none]="rounded === 'none'"
+             [ngClass]="piClass"
+             [ngStyle]="piStyle" class="{{avatarSize()}}" [src]="image" alt="pi-avatar">
     </ng-container>
     <ng-container *ngIf="!image">
         <ng-container *ngIf="initials">
             <div [class.rounded-full]="rounded === ''"
                  [class.rounded]="rounded === null"
-                 [class.rounded-none]="rounded === 'none'" class="inline-flex overflow-hidden relative justify-center items-center {{avatarSize()}} bg-gray-100 dark:bg-gray-600">
+                 [class.rounded-none]="rounded === 'none'" class="inline-flex overflow-hidden relative justify-center items-center {{avatarSize()}} bg-gray-100 dark:bg-gray-600"
+                 [ngClass]="piClass"
+                 [ngStyle]="piStyle">
                 <span class="font-medium text-gray-600 dark:text-gray-300">{{initials}}</span>
             </div>
         </ng-container>
         <ng-container *ngIf="!initials">
             <div [class.rounded-full]="rounded === ''"
                  [class.rounded]="rounded === null"
-                 [class.rounded-none]="rounded === 'none'" class="overflow-hidden relative {{avatarSize()}} bg-gray-100 border">
+                 [class.rounded-none]="rounded === 'none'" class="overflow-hidden relative {{avatarSize()}} bg-gray-100 border"
+                 [ngClass]="piClass"
+                 [ngStyle]="piStyle">
                 <svg class="absolute w-fit h-fit text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
             </div>
         </ng-container>

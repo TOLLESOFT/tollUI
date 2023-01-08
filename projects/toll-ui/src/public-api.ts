@@ -102,3 +102,11 @@ export * from './core/pi-avatar/pi-avatar.module'
  */
 export * from './core/pi-avatar-group/avatar-group/avatar-group.component'
 export * from './core/pi-avatar-group/pi-avatar-group.module'
+
+/**
+ * calendar component
+ */
+export * from './core/pi-calendar/calendar/calendar.component'
+export * from './core/pi-calendar/pi-calendar.module'
+
+export * from './core/pi-toll/pi-toll.module'

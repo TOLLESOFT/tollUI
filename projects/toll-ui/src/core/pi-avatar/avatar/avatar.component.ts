@@ -11,6 +11,13 @@ export class AvatarComponent implements OnInit {
   @Input() initials = '';
   @Input() size: 'small' | 'normal' | 'large' | 'extra large' = 'normal';
 
+  /**
+   * {css style: value}
+   * {[p:string]: any}
+   * */
+  @Input() piStyle: any;
+
+  @Input() piClass: any;
   @Input() badgeTemplate: TemplateRef<any> | undefined;
 
   constructor() {

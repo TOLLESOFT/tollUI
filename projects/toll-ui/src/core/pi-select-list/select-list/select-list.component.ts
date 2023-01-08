@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {BaseService} from "../../base.service";
 import {SearchItem} from "../search-item";
@@ -16,27 +16,42 @@ import {fromEvent} from "rxjs";
     }
   ]
 })
-export class SelectListComponent implements OnInit, ControlValueAccessor, AfterViewInit {
+export class SelectListComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnChanges {
   @Input() id: string = BaseService.uuid();
   @Input() placeholder: string = '';
-  @Input() data: Array<SearchItem> = [];
+  @Input() data: Array<any> = [];
+  transformedData: Array<SearchItem> = [];
   @Input() showAddButton = true;
   @Input() searchable = false;
   @Input() showIcon = false;
   @Output() addNewItem = new EventEmitter();
-  onChange = (value: any | null) => {};
-  onTouched = (value: any | null) => {};
-  newList:Array<SearchItem> = [];
+  onChange = (value: any | null) => {
+  };
+  onTouched = (value: any | null) => {
+  };
+  newList: Array<SearchItem> = [];
   hidden = true;
   selectedItem?: SearchItem;
   displayLabel = '';
   displayValue: any;
+  @Input() dataLabel: any;
+  @Input() dataId: any;
+
   constructor() {
   }
 
-  ngOnInit(): void {
-
+  ngOnChanges(changes: SimpleChanges): void {
     this.newList = this.data;
+    this.transformedData = this.data.map(u => {
+      return <SearchItem>{ id: u[this.dataId], value: u[this.dataLabel] }
+    })
+  }
+
+  ngOnInit(): void {
+    this.newList = this.data;
+    this.transformedData = this.data.map(u => {
+      return <SearchItem>{ id: u[this.dataId], value: u[this.dataLabel] }
+    })
   }
 
   selectItem(item: SearchItem) {
@@ -64,9 +79,9 @@ export class SelectListComponent implements OnInit, ControlValueAccessor, AfterV
   }
 
   writeValue(obj: any): void {
-    this.selectedItem = this.data.find(u => u.id === obj);
-    this.displayLabel = this.selectedItem?.value;
-    this.displayValue = this.selectedItem?.id;
+    const data = this.data.find(u => u.id === obj);
+    this.displayLabel = data[this.dataLabel];
+    this.displayValue = data[this.dataId];
   }
 
   ngAfterViewInit(): void {

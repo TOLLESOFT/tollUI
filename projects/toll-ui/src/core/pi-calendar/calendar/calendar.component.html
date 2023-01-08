@@ -1,0 +1,156 @@
+<ng-container *ngIf="calendarType === 'full'">
+    <div class="relative flex flex-col w-full h-full border rounded p-2">
+        <div class="flex justify-between items-center">
+            <div class="space-x-1 flex items-center">
+                <pi-icon-button size="small" icon="pi pi-arrow-left" (click)="GetPreviousMonth()">
+                </pi-icon-button>
+                <pi-icon-button size="small" icon="pi pi-arrow-right" (click)="GetNextMonth()">
+                </pi-icon-button>
+                <pi-button (click)="setToday()" size="small">
+                    today
+                </pi-button>
+            </div>
+            <label class="font-bold">{{monthYear}}</label>
+            <div class="space-x-1 flex items-center">
+                <pi-button size="small">
+                    month
+                </pi-button>
+                <pi-button size="small">
+                    week
+                </pi-button>
+                <pi-button size="small">
+                    day
+                </pi-button>
+            </div>
+        </div>
+        <div class="grid grid-cols-7 mt-4">
+            <ng-container *ngFor="let days of AllDays">
+                <div class="min-w-full h-10 border flex items-center justify-center">
+                    <span class="text-xs font-bold">{{days.slice(0,3)}}</span>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngFor="let dates of weeks; let i = index">
+            <ng-container *ngIf="dates.week !== null">
+                <div class="grid grid-cols-7">
+                    <ng-container *ngFor="let date of dates.dates">
+                        <div #element class="min-w-full border group" [ngStyle]="{'min-height': element.clientWidth+'px'}">
+                            <ng-container *ngIf="date !== null" >
+                                <div class="flex flex-col w-full h-full group-hover:cursor-pointer"
+                                     [class.bg-blue-200]="getToday(date)">
+                                    <div class="flex justify-end p-1 group-hover:cursor-pointer">
+                                        {{GetDate(date)}}
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>
+<ng-container>
+    <div class="relative flex w-[300px] p-2">
+        <ng-container *ngIf="smallCalendarView === 'month'">
+            <div>
+                <div class="flex justify-between px-2 mb-4">
+                    <div class="flex space-x-2 items-center">
+                        <span (click)="smallCalendarView = 'all month'" class="cursor-pointer block text-[13px]">{{month}}</span>
+                        <div>
+                            <input class="text-[13px] border border-gray-500 w-14 h-6 px-1 rounded" type="number" [(ngModel)]="selectedYear" (ngModelChange)="selectYear($event)">
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 items-center">
+                        <i (click)="GetPreviousMonth()" class="cursor-pointer text-gray-500 text-[13px] pi pi-chevron-left"></i>
+                        <i (click)="GetNextMonth()" class="cursor-pointer text-gray-500 text-[13px] pi pi-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="h-auto flex items-center">
+                    <ng-container *ngFor="let days of AllDays">
+                        <div class="w-10 h-10 flex items-center justify-center">
+                            <span class="leading-none block text-gray-400 text-[12px]">{{days.slice(0,1)}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="border-gray-300 overflow-hidden divide-y">
+                    <ng-container *ngFor="let dates of weeks; let i = index">
+                        <ng-container *ngIf="dates.week !== null">
+                            <div class="flex">
+                                <ng-container *ngFor="let date of dates.dates">
+                                    <ng-container *ngIf="!date">
+                                        <div class="w-10 h-10 hover:cursor-pointer">
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="date" >
+                                        <div class="w-10 h-10 flex items-center justify-center">
+                                            <ng-container *ngIf="(selectedDate | date : 'MM/dd/yyyy') !== (date | date: 'MM/dd/yyyy'); else thisIsSelectedDate">
+                                                <ng-container *ngIf="disablePastDates; else pastDateAllowed">
+                                                    <ng-container *ngIf="compareDate(date); else isNotDisabled">
+                                                        <div class="w-8 h-8 flex items-center justify-center hover:cursor-not-allowed">
+                                                            <span class="text-[14px] leading-none text-gray-400">{{date | date: 'dd'}}</span >
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-template #isNotDisabled>
+                                                        <div (click)="selectDate(date)"
+                                                             [class.rounded-full]="getToday(date)"
+                                                             [class.bg-blue-200]="getToday(date)" class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                            <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                        </div>
+                                                    </ng-template>
+                                                </ng-container>
+                                                <ng-template #pastDateAllowed>
+                                                    <div (click)="selectDate(date)"
+                                                         [class.rounded-full]="getToday(date)"
+                                                         [class.bg-blue-200]="getToday(date)" class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                        <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                    </div>
+                                                </ng-template>
+                                            </ng-container>
+                                           <ng-template #thisIsSelectedDate>
+                                               <ng-container *ngIf="disablePastDates; else isNotDisablePassDateSelected">
+                                                   <ng-container *ngIf="compareDate(date); else isNotDisabledSelected">
+                                                       <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-not-allowed">
+                                                           <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                       </div>
+                                                   </ng-container>
+                                                   <ng-template #isNotDisabledSelected>
+                                                       <div (click)="selectDate(date)" class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-pointer">
+                                                           <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                       </div>
+                                                   </ng-template>
+                                               </ng-container>
+                                               <ng-template #isNotDisablePassDateSelected>
+                                                   <div (click)="selectDate(date)" class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-pointer">
+                                                       <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                   </div>
+                                               </ng-template>
+                                           </ng-template>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="flex justify-between px-2 mt-2 items-center">
+                    <span class="block text-[13px] ">today: {{today | date : 'MM/dd/yyyy'}}</span>
+                    <pi-button (click)="setToday()" size="extra small">today</pi-button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="smallCalendarView === 'all month'">
+            <div class="border-gray-300 overflow-hidden w-full divide-y">
+                <div class="grid grid-cols-3 w-full">
+                    <ng-container *ngFor="let month of AllMonths">
+                        <div class="w-full h-14 flex items-center justify-center hover:cursor-pointer" (click)="selectMonth(month);smallCalendarView = 'month'">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <span class="text-[14px] leading-none">{{month.slice(0,3)}}</span >
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

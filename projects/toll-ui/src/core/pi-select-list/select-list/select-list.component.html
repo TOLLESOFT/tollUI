@@ -5,7 +5,7 @@
                [(ngModel)]="displayLabel"
                (ngModelChange)="searchList($event)"
                select-list="pi-select-list"
-               class="block pr-10 p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+               class="block pr-10 p-4 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <div class="flex flex-col">
                 <i class="pi pi-chevron-up text-gray-500 text-xs" ></i>
@@ -22,7 +22,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf="data.length > 0">
-            <ng-container *ngFor="let item of data">
+            <ng-container *ngFor="let item of transformedData">
                 <div (click)="selectItem(item)" class="p-2 cursor-pointer hover:bg-gray-200" [class.bg-gray-200]="displayValue === item.id">
                     <span class="text-[14px] leading-[16px] font-[400]">{{item.value}}</span>
                 </div>

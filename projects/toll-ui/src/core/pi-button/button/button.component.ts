@@ -21,11 +21,14 @@ export class ButtonComponent implements OnInit, OnChanges {
   @Input() outline: '' | undefined = undefined;
   @Input() disabled: '' | true | false = false;
   @Input() rounded: '' | 'full' = '';
-  xtra_small = 'py-2 px-3 text-xs font-medium items-center inline-flex space-x-2 justify-center';
-  small = 'py-2 px-3 text-sm font-medium items-center inline-flex space-x-2 justify-center';
-  normal = 'py-2.5 px-5 text-sm font-medium items-center inline-flex space-x-2 justify-center';
-  large = 'py-3 px-5 text-base font-medium items-center inline-flex space-x-2 justify-center';
-  xtra_large = 'py-3.5 px-6 text-base font-medium items-center inline-flex space-x-2 justify-center';
+  @Input() piStyle: any;
+
+  @Input() piClass: any;
+  xtra_small = 'py-2 px-3 text-xs font-medium items-center inline-flex space-x-2 justify-center leading-none';
+  small = 'py-2.5 px-3 text-sm font-medium items-center inline-flex space-x-2 justify-center leading-none';
+  normal = 'py-3 px-5 text-sm font-medium items-center inline-flex space-x-2 justify-center leading-none';
+  large = 'py-3.5 px-5 text-base font-medium items-center inline-flex space-x-2 justify-center leading-none';
+  xtra_large = 'py-4 px-6 text-base font-medium items-center inline-flex space-x-2 justify-center leading-none';
 
   primary = '';
   success = '';
@@ -42,7 +45,7 @@ export class ButtonComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.button_state();
-   }
+  }
 
   ngOnInit(): void {
     this.button_state();

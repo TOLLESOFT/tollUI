@@ -1,6 +1,8 @@
 <button
         [class.w-full]="block === ''"
         [disabled]="disabled || disabled === ''"
+        [ngClass]="piClass"
+        [ngStyle]="piStyle"
         type="button"
         class="
 {{ size === 'extra small' ? xtra_small : ''}}

@@ -1,24 +1,42 @@
-# TollUI
+# TollUI-Angular
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+>This ia an angular UI library built with on the popular [TailwindCSS](https://tailwindcss.com/) library with ❤️.
 
-## Code scaffolding
+> This project is still in its early stages.
 
-Run `ng generate component component-name --project tollUI` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project tollUI`.
-> Note: Don't forget to add `--project tollUI` or else it will be added to the default project in your `angular.json` file. 
+### Website
+Go to the website for documentation [http://ui.sidestores.com](http://ui.sidestores.com/#/)
 
-## Build
 
-Run `ng build tollUI` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Get Started
+### Install
+```
+npm install toll-ui
+```
 
-## Publishing
+### Dependencies
+Install the following dependencies for toll-UI to work properly
+```
+npm install primeicons --save
+npm install date-fns --save
+```
 
-After building your library with `ng build tollUI`, go to the dist folder `cd dist/toll-ui` and run `npm publish`.
 
-## Running unit tests
+Note: Don't forget to add the code below to your `angular.json` file.
 
-Run `ng test tollUI` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```json
+{
+  "styles": [
+    "src/styles.css",
+    "node_modules/toll-ui/core/style.scss",
+    "node_modules/primeicons/primeicons.css"
+  ]
+}
+```
+## Import
+The components are configured as modules and each component is imported from `toll-ui` .
+Below is how an import would look like
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```ts
+import { PiButtonModule } from "toll-ui"
+```
