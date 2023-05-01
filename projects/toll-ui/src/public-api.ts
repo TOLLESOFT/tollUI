@@ -1,6 +1,6 @@
-/*
+/**
  * Public API Surface of toll-ui
- */
+*/
 
 /**
  * button component
