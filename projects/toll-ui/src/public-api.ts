@@ -1,6 +1,6 @@
-/*
+/**
  * Public API Surface of toll-ui
- */
+*/
 
 export * from './core/pi-button/pi-button.module'
 export * from './core/pi-button/button/button.component'
