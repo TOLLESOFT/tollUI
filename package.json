@@ -9,7 +9,6 @@
     "test": "ng test",
     "postbuild": "npx tailwindcss projects/toll-ui/tailwind.config.js -i projects/toll-ui/src/core/style.scss -o dist/toll-ui/core/style.scss"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.0.0",
     "@angular/cdk": "^16.0.0",
@@ -21,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "date-fns": "^2.29.3",
+    "ng-packagr": "^16.0.0",
     "primeicons": "^6.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
