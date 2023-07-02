@@ -1,4 +1,4 @@
-import {Injectable, Injector, TemplateRef, Type} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {ComponentPortal, PortalInjector} from "@angular/cdk/portal";
 import {Overlay, OverlayConfig} from "@angular/cdk/overlay";
 import {ModalComponent} from "./modal/modal.component";

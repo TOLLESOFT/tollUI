@@ -25,13 +25,14 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   selectedMonth: any;
   selectedYear: any;
   monthYear: any;
-  month: any;
-  year: any;
+  // month: any;
+  years: number[] = [];
   currentDate = new Date();
   today = new Date();
+
   @Input() useUTC = false;
   @Input() disablePastDates = false;
-  allowPastDates = true;
+
   monthCount = 0;
   weeks: Array<Week> = [];
   AllDates: Array<any> = [];
@@ -64,6 +65,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   GetCalendar(year: number, month: number) {
     this.currentDate = new Date(year, month, 1);
+    this.selectedYear = this.currentDate.getFullYear();
     if (this.useUTC) {
       this.AllDates = this.DaysInMonthUTC(
           this.currentDate.getUTCFullYear(),
@@ -80,6 +82,11 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   GetDefaultCalendar() {
+    const tYears: number[] = []
+    for (let i = 0; i < 12; i++) {
+      tYears.push(2016 + i)
+    }
+    this.years = tYears;
     if (this.useUTC) {
       this.AllDates = this.DaysInMonthUTC(
           this.currentDate.getUTCFullYear(),
@@ -97,8 +104,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   private DaysInMonth(year: number, month: number): any {
     const date = new Date(year, month, 1);
-    this.monthYear = `${this.GetMonth(date)} ${year}`;
-    this.month = this.GetMonth(date);
+    this.monthYear = `${this.AllMonths[month]} ${year}`;
     this.monthCount = month;
     this.selectedYear = year;
     const days = [];
@@ -111,8 +117,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   private DaysInMonthUTC(year: number, month: number): any {
     const date = new Date(Date.UTC(year, month, 1));
-    this.monthYear = `${this.GetMonth(date)} ${year}`;
-    this.month = this.GetMonth(date);
+    this.monthYear = `${this.AllMonths[month]} ${year}`;
     this.monthCount = month;
     this.selectedYear = year;
     const days = [];
@@ -124,66 +129,84 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   selectMonth(month: string) {
+    this.smallCalendarView = 'month'
     this.monthCount = this.AllMonths.findIndex(u => u === month);
     this.GetCalendar(this.selectedYear, this.monthCount);
   }
 
   selectYear(year: number) {
     if (year > this.today.getFullYear()-200 && year < this.today.getFullYear()+500) {
-      this.GetCalendar(this.selectedYear, this.monthCount);
+      this.GetCalendar(year, this.currentDate.getMonth());
     }
   }
 
-  GetMonth(date: Date): any {
-    return this.AllMonths[date.getMonth()];
-  }
-
-  GetWeeks(dates: Date[]) {
-    this.weeks = [];
+  GetWeeks = (dates: Date[]) => {
+    const weeks: Week[] = []
     dates.forEach((elements) => {
       // get week day
-      const week = getWeek(elements);
-      const getdayWeek = this.weeks.find((u) => u.week === week);
+      const week = getWeek(elements)
+      const getdayWeek = weeks.find((u) => u.week === week)
       if (getdayWeek === undefined) {
         // update weeks array
-        this.weeks.push({
+        weeks.push({
           week,
-          dates: [elements],
-        });
+          dates: [elements]
+        })
       } else {
-        getdayWeek.dates.push(elements);
+        getdayWeek.dates.push(elements)
       }
-    });
+    })
 
-    const nMRT = this.weeks[0].dates;
-    const n: Date[] | any = [];
+    const nMRT = weeks[0].dates
+    const n: Date[] | any = []
+
     for (const item of nMRT) {
       if (item.getDay() > 0) {
-        const newArray = new Array(item.getDay());
+        const newArray = new Array(item.getDay())
+        let days: Date[] = []
+        if (item.getMonth() === 0) {
+          days = this.DaysInMonth(item.getFullYear() - 1, 11)
+        } else if (item.getMonth() === 11) {
+          days = this.DaysInMonth(item.getFullYear() + 1, 0)
+        } else {
+          days = this.DaysInMonth(item.getFullYear(), item.getMonth() - 1)
+        }
         for (let x = 0; x < newArray.length; x++) {
-          n.push(null);
+          const sub = newArray.length - x
+          n.push(new Date(days[days.length - sub]))
         }
         nMRT.forEach((ele: any) => {
-          n.push(ele);
-        });
-        this.weeks[0].dates = n;
-        break;
+          n.push(ele)
+        })
+        weeks[0].dates = n
+        break
       } else {
-        break;
+        break
       }
     }
 
-    const lastWeek = this.weeks[this.weeks.length-1].dates;
-    const nlastDate: Date[] | any = [];
+    const lastWeek = weeks[weeks.length - 1].dates
     for (let i = 0; i < 7; i++) {
-      if (lastWeek[i]) {
-        nlastDate.push(lastWeek[i]);
-      } else {
-        nlastDate.push(null);
+      if (lastWeek[i] === undefined) {
+        const newArray = new Array(6 - lastWeek[i - 1].getDay())
+        let days: Date[] = []
+        if (lastWeek[i - 1].getMonth() === 11) {
+          days = this.DaysInMonth(lastWeek[i - 1].getFullYear() + 1, 0)
+        } else {
+          days = days = this.DaysInMonth(
+            lastWeek[i - 1].getFullYear(),
+            lastWeek[i - 1].getMonth() + 1
+          )
+        }
+        for (let x = 0; x < newArray.length; x++) {
+          lastWeek.push(new Date(days[x]))
+        }
+        weeks[weeks.length - 1].dates = lastWeek
+        break
       }
     }
 
-    this.weeks[this.weeks.length-1].dates = nlastDate;
+    this.weeks = weeks;
   }
 
   GetDate(date: Date): any {
@@ -192,6 +215,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   selectDate(date: Date) {
     this.selectedDate = date;
+    this.GetCalendar(this.selectedDate.getFullYear(), this.selectedDate.getMonth());
     this.onChange(this.selectedDate);
   }
 
@@ -219,9 +243,27 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     this.GetDefaultCalendar();
   }
 
+  GetNextYears = () => {
+    const tYears: number[] = []
+    for (let i = 0; i < 12; i++) {
+      tYears.push(this.years[this.years.length - 1] + (i + 1))
+    }
+    this.years = tYears
+  }
+
+  GetPreviousYears = () => {
+    if (this.years[0] > 1800) {
+      const tYears: number[] = []
+      for (let i = 0; i < 12; i++) {
+        tYears.push(this.years[0] - (12 - i))
+      }
+      this.years = tYears;
+    }
+  }
+
   getToday(date: Date): boolean {
     const today = format(new Date(), 'MM/dd/yyyy');
-    const current = format(date, 'MM/dd/yyyy');
+    const current = format(new Date(date), 'MM/dd/yyyy');
     return today === current;
   }
 
@@ -235,10 +277,12 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     this.onChange(this.selectedDate);
     this.GetDefaultCalendar();
   }
+
   ngOnInit(): void {
     this.selectedYear = this.selectedDate.getFullYear();
     this.GetDefaultCalendar();
   }
+
   registerOnChange(fn: (value: Date) => void): void {
     this.onChange = fn;
   }
@@ -252,11 +296,10 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   writeValue(obj: Date): void {
     if (obj) {
-      this.selectedDate = new Date(obj.getFullYear(), obj.getMonth(), obj.getDate());
+      this.selectedDate = new Date(obj);
       this.GetCalendar(this.selectedDate.getFullYear(), this.selectedDate.getMonth());
     }
   }
-
 }
 
 interface Week {

@@ -1,0 +1,214 @@
+<div class="flex flex-col w-full h-full overflow-auto bg-white shadow-md sm:rounded-lg">
+  <div *ngIf="showPagination" class="flex h-auto justify-end w-full p-4">
+    <pi-pagination
+      [pageSize]="pageSize"
+      [pageNumber]="pageNumber"
+      [totalPages]="totalPages"
+      [totalRecords]="totalRecords"
+      (pageNumberChange)="pageNumberChangeEvent($event)"
+      (pageSizeChange)="pageSizeChangeEvent($event)"
+    ></pi-pagination>
+  </div>
+  <div class="grow h-full w-full {{showPagination && 'overflow-auto'}}">
+    <div class="relative overflow-x-auto">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <ng-container *ngIf="useChildTable">
+            <th class="px-6 py-3">
+
+            </th>
+          </ng-container>
+          <ng-container *ngIf="allowCheckBoxes">
+            <th class="px-6 py-3">
+              <pi-check-box [(ngModel)]="allSelected" (ngModelChange)="selectAll($event)"></pi-check-box>
+            </th>
+          </ng-container>
+          <ng-container *ngIf="showNumbering">
+            <th class="px-6 py-3">
+              #
+            </th>
+          </ng-container>
+          <ng-container *ngFor="let head of headers">
+            <ng-container *ngIf="head.name !== 'id'">
+              <th class="px-6 py-3">
+                {{head.alias}}
+              </th>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="actions.length > 0">
+            <th class="px-6 py-3">
+              actions
+            </th>
+          </ng-container>
+        </tr>
+        </thead>
+
+        <tbody>
+        <ng-container *ngIf="data.length > 0; else empty">
+          <ng-container *ngFor="let item of mainData;let i = index">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+              <ng-container *ngIf="useChildTable">
+                <td class="px-6 py-4">
+                  <i (click)="collapseChild(item)" class="fa-solid {{item.expand ? 'fa-chevron-up' : 'fa-chevron-down'}} text-base cursor-pointer"></i>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="allowCheckBoxes">
+                <td class="px-6 py-4">
+                  <pi-check-box [(ngModel)]="item.checked" (ngModelChange)="checkItem(item, $event)"></pi-check-box>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="showNumbering">
+                <td class="px-6 py-4">
+                  <ng-container *ngIf="usePagination; else dontUsePaging">
+                    {{startCount+i+1}}
+                  </ng-container>
+                  <ng-template #dontUsePaging>
+                    {{i+1}}
+                  </ng-template>
+                </td>
+              </ng-container>
+              <ng-container *ngFor="let head of headers">
+                <ng-container *ngIf="head.name !== 'id'">
+                  <td class="px-6 py-4">
+                    <ng-container *ngIf="head.isObject">
+                      <ng-container *ngIf="head.type === 'string' ">
+                        {{getValue(item, head.name.split('.'))}}
+                      </ng-container>
+                      <ng-container *ngIf="head.type === 'boolean'">
+                        <pi-check-box [disabled]="true" [value]="getValue(item, head.name.split('.'))"></pi-check-box>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!head.isObject">
+                      <ng-container *ngIf="head.type === 'boolean'">
+                        <pi-check-box [disabled]="true" [value]="item[head.name]"></pi-check-box>
+                      </ng-container>
+                      <ng-container *ngIf="head.type === 'string' ">
+                        {{item[head.name]}}
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="actions.length > 0">
+                <td class="px-6 py-4">
+                  <div class="flex items-center space-x-3">
+                    <ng-container *ngFor="let action of actions">
+                      <ng-container *ngIf="action.buttonType === 'icon-button'">
+                        <pi-icon-button (click)="OnActionPerformed.emit({ type: action.actionType, data: item })" [type]="action.buttonColor" [size]="'small'" [icon]="action.buttonTypeContent"></pi-icon-button>
+                      </ng-container>
+                      <ng-container *ngIf="action.buttonType === 'button'">
+                        <pi-button (click)="OnActionPerformed.emit({ type: action.actionType, data: item })" [type]="action.buttonColor" [size]="'small'">
+                          {{action.buttonTypeContent}}
+                        </pi-button>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </td>
+              </ng-container>
+            </tr>
+            <ng-container *ngIf="useChildTable">
+              <ng-container *ngIf="item.expand">
+                <tr>
+                  <td [colSpan]="calcColSpan()">
+                    <div class="pl-10 w-full">
+                      <div class="w-full border-l">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                          <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                          <tr>
+                            <ng-container *ngIf="showNumbering">
+                              <th class="px-6 py-3">
+                                #
+                              </th>
+                            </ng-container>
+                            <ng-container *ngFor="let head of childTableHeaders">
+                              <ng-container *ngIf="head.name !== 'id'">
+                                <th class="px-6 py-3">
+                                  {{head.alias}}
+                                </th>
+                              </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="childActions.length > 0">
+                              <th class="px-6 py-3">
+                                actions
+                              </th>
+                            </ng-container>
+                          </tr>
+                          </thead>
+
+                          <tbody>
+                          <ng-container *ngIf="item[childTableField].length > 0; else empty">
+                            <ng-container *ngFor="let childItem of item[childTableField];let j = index">
+                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <ng-container *ngIf="showNumbering">
+                                  <td class="px-6 py-4">
+                                    {{j+1}}
+                                  </td>
+                                </ng-container>
+                                <ng-container *ngFor="let head of childTableHeaders">
+                                  <ng-container *ngIf="head.name !== 'id'">
+                                    <td class="px-6 py-4">
+                                      <ng-container *ngIf="head.isObject">
+                                        <ng-container *ngIf="head.type === 'string' ">
+                                          {{getValue(item, head.name.split('.'))}}
+                                        </ng-container>
+                                        <ng-container *ngIf="head.type === 'boolean'">
+                                          <pi-check-box [disabled]="true" [value]="getValue(childItem, head.name.split('.'))"></pi-check-box>
+                                        </ng-container>
+                                      </ng-container>
+                                      <ng-container *ngIf="!head.isObject">
+                                        <ng-container *ngIf="head.type === 'boolean'">
+                                          <pi-check-box [disabled]="true" [value]="childItem[head.name]"></pi-check-box>
+                                        </ng-container>
+                                        <ng-container *ngIf="head.type === 'string' ">
+                                          {{childItem[head.name]}}
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                  </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="childActions.length > 0">
+                                  <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-3">
+                                      <ng-container *ngFor="let action of childActions">
+                                        <ng-container *ngIf="action.buttonType === 'icon-button'">
+                                          <pi-icon-button (click)="OnChildActionPerformed.emit({ type: action.actionType, data: childItem, parentData: item })" [type]="action.buttonColor" [size]="'small'" [icon]="action.buttonTypeContent"></pi-icon-button>
+                                        </ng-container>
+                                        <ng-container *ngIf="action.buttonType === 'button'">
+                                          <pi-button (click)="OnChildActionPerformed.emit({ type: action.actionType, data: childItem, parentData: item })" [type]="action.buttonColor" [size]="'small'">
+                                            {{action.buttonTypeContent}}
+                                          </pi-button>
+                                        </ng-container>
+                                      </ng-container>
+                                    </div>
+                                  </td>
+                                </ng-container>
+                              </tr>
+                            </ng-container>
+                          </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <tr>
+      <td class="px-6 py-4" [colSpan]="headers.length">
+        <div class="w-full flex justify-center items-center">
+          {{emptyMessage}}
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+</div>

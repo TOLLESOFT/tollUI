@@ -10,9 +10,13 @@ export class ModalRef<R = any, T = any> {
         private overlay: OverlayRef,
         public modal: Modal<T>
     ) {
+
+      console.log(modal);
       overlay.backdropClick().subscribe({
         next: (_) => {
-          this._close('backdropClick', null);
+          if (modal.backdropClose) {
+            this._close('backdropClick', null);
+          }
         }
       })
     }
@@ -26,7 +30,7 @@ export class ModalRef<R = any, T = any> {
         type,
         data
       });
-      timer(100).subscribe({
+      timer(50).subscribe({
         next: (()=> {
           this.overlay.dispose();
           this.afterClosed$.complete();

@@ -15,7 +15,7 @@
     [disabled]="disabled"
     [placeholder]="placeholder"
     class="{{defaultClass}} {{invalid ? (required ? invalidClass: inputValidClass) : inputValidClass}} {{size === 'small' && smallSize}} {{size === 'normal' && defaultSize}} {{size === 'large' && largeSize}}"
-    (ngModelChange)="onChange($event)" />
+    (ngModelChange)="updateForm($event)" />
   <ng-container *ngIf="invalid">
     <ng-container *ngIf="required">
       <small class="text-red-600">

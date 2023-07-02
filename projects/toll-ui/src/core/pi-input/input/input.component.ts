@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {BaseService} from "../../base.service";
 
@@ -25,6 +25,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() name: string | undefined = '';
   @Input() readOnly: boolean = false;
   @Input() size: 'small' | 'normal' | 'large' | undefined = 'normal'
+  touched = false;
   defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white';
   defaultSize = 'p-2.5 text-sm';
   smallSize = 'p-2 sm:text-xs';
@@ -32,7 +33,8 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-400 dark:border-gray-500';
   invalidClass = 'focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 border border-red-500 dark:border-red-600'
   onChange = (_: any) => {};
-  onTouched = (_: any) => {};
+  onTouched = (_?: any) => {};
+
   @Input() disabled = false;
   id = BaseService.uuid();
   constructor() { }
@@ -55,5 +57,13 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
   writeValue(obj: any): void {
     this.model = obj;
+  }
+
+  updateForm(value: any) {
+    if (this.required) {
+      this.invalid = !this.model;
+    }
+
+    this.onChange(value);
   }
 }

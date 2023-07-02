@@ -8,6 +8,7 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
+import {ButtonService} from "../button.service";
 
 @Component({
   selector: 'pi-button',
@@ -20,7 +21,7 @@ export class ButtonComponent implements OnInit, OnChanges {
   @Input() block: '' | undefined = undefined;
   @Input() outline: '' | undefined = undefined;
   @Input() disabled: '' | true | false = false;
-  @Input() rounded: '' | 'full' = '';
+  @Input() rounded: '' | 'full' | 'rounded' = 'rounded';
   @Input() piStyle: any;
 
   @Input() piClass: any;
@@ -40,15 +41,15 @@ export class ButtonComponent implements OnInit, OnChanges {
   danger_outline = '';
   warning_outline = '';
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, public service: ButtonService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.button_state();
+    // this.button_state();
   }
 
   ngOnInit(): void {
-    this.button_state();
+    // this.button_state();
   }
 
   button_color(): any {
@@ -97,4 +98,6 @@ export class ButtonComponent implements OnInit, OnChanges {
     this.warning_outline = `${(this.disabled || this.disabled === '') ? 'text-yellow-400 border-yellow-400 cursor-not-allowed':'text-yellow-500 hover:text-white border-yellow-500 hover:bg-yellow-600'} border focus:ring-4 focus:outline-none focus:ring-yellow-300`;
 
   }
+
+    protected readonly undefined = undefined;
 }

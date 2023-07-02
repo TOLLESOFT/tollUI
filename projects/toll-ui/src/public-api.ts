@@ -74,6 +74,11 @@ export * from './core/pi-select-list/select-list/select-list.component'
 export * from './core/pi-select-list/pi-select-list.module'
 
 /**
+ * multi select list component
+ */
+export * from './core/pi-select-list/multi-select-list/multi-select-list.component'
+
+/**
  * card component
  */
 export * from './core/pi-card/card/card.component'
@@ -110,3 +115,18 @@ export * from './core/pi-calendar/calendar/calendar.component'
 export * from './core/pi-calendar/pi-calendar.module'
 
 export * from './core/pi-toll/pi-toll.module'
+
+/*
+* table component
+* */
+export * from './core/pi-table/table/table.component'
+export * from  './core/pi-table/pi-table.module'
+export * from './core/pi-table/table-actions'
+export * from './core/pi-table/table-header'
+
+/*
+* pagination component
+* */
+export * from './core/pi-pagination/pi-pagination.module'
+export * from './core/pi-pagination/pagination'
+export * from './core/pi-pagination/pi-pagination/pi-pagination.component'

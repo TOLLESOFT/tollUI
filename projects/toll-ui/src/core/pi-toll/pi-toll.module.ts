@@ -39,6 +39,14 @@ export class PiTollModule {
               }
             }
           }
+            if (!document.activeElement?.attributes.getNamedItem('multi-select-list')) {
+                const ele = document.getElementsByClassName('multi-select-list-container');
+                for (let i = 0; i< ele.length;i++) {
+                    if (!ele.item(i)?.classList.contains('hidden')) {
+                        ele.item(i)?.classList.add('hidden')
+                    }
+                }
+            }
         }
       })
   }

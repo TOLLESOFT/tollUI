@@ -1,7 +1,8 @@
-import {Component, OnInit, TemplateRef, Type} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, Type} from '@angular/core';
 import {ModalButtons} from "../modal-buttons";
 import {ModalRef} from "../modal-ref";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {BaseService} from "../../base.service";
 
 @Component({
   selector: 'pi-modal',
@@ -10,7 +11,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
   animations: [trigger('enterLeave', [
     transition(':enter', [
       style({ transform: 'scale(0%)' }),
-      animate('250ms ease-in')
+      animate('100ms ease-in')
     ]),
     transition(':leave', [
       animate('100ms ease-out', style({ transform: 'scale(0%)' }))
@@ -18,11 +19,13 @@ import {animate, style, transition, trigger} from "@angular/animations";
   ])]
 })
 export class ModalComponent implements OnInit {
+  id = BaseService.uuid();
   contentType!: 'template' | 'string' | 'component';
   content!: string | TemplateRef<any> | Type<any>;
   modalSize: 'normal' | 'large' | undefined = 'normal';
   fullScreen: boolean | undefined = false;
   backdropClose: boolean | undefined = true;
+  rounded: boolean | undefined = true;
   buttons: Array<ModalButtons> = [];
   context: any;
   modalCss = '';
@@ -43,14 +46,15 @@ export class ModalComponent implements OnInit {
     this.content = this.ref.modal.content;
     this.modalSize = this.ref.modal.size;
     this.fullScreen = this.ref.modal.fullScreen;
+    this.rounded = this.ref.modal.rounded;
     if (this.fullScreen) {
       this.modalCss = 'w-screen h-screen'
     } else {
       if (this.modalSize === 'large') {
-        this.modalCss = 'w-full md:w-11/12';
+        this.modalCss = 'w-full lg:w-11/12';
       }
       if (this.modalSize === 'normal') {
-        this.modalCss = 'w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12';
+        this.modalCss = 'w-full lg:w-6/12 xl:w-4/12';
       }
     }
     if (this.ref.modal.backdropClose === undefined) {
@@ -74,5 +78,4 @@ export class ModalComponent implements OnInit {
       this.contentType = 'component';
     }
   }
-
 }

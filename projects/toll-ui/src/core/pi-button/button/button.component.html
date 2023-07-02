@@ -11,7 +11,13 @@
 {{ size === 'large' ? large : '' }}
 {{ size === 'extra large' ? xtra_large : '' }}
 
-{{ rounded === 'full' ? 'rounded-full' : 'rounded-lg' }}
-{{button_color()}}">
+{{ rounded === 'full' && 'rounded-full'}}
+{{ rounded === '' || rounded === 'rounded' && 'rounded-lg' }}
+
+{{type === 'primary' && (outline === undefined ? service.primaryCSS : primary_outline)}}
+{{type === 'success' && (outline === undefined ? service.successCSS : success_outline)}}
+{{type === 'danger' && (outline === undefined ? service.dangerCSS : danger_outline)}}
+{{type === 'warning' && (outline === undefined ? service.warningCSS : warning_outline)}}
+">
     <ng-content></ng-content>
 </button>

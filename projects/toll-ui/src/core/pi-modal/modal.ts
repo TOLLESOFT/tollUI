@@ -7,5 +7,6 @@ export class Modal<T> {
     size?: 'normal'| 'large';
     fullScreen?: boolean;
     backdropClose?: boolean;
-    buttons?: ModalButtons[]
+    buttons?: ModalButtons[];
+    rounded?: boolean
 }
