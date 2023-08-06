@@ -1,0 +1,6 @@
+<div class="space-x-4 flex items-center">
+  <tc-icon-button (click)="previousPage()" type="primary" size="small" icon="fa-solid fa-arrow-left"></tc-icon-button>
+  <tc-icon-button (click)="nextPage()" type="primary" size="small" icon="fa-solid fa-arrow-right"></tc-icon-button>
+  <tc-select-list size="small" [(ngModel)]="pageSize" [data]="defaultPageSizes" [searchable]="false" (ngModelChange)="sizeChange($event)" [dataLabel]="'value'" [dataId]="'value'"></tc-select-list>
+  <label class="block min-w-max text-[15px]">page {{totalPages === 0 ? 0 : pageNumber}} of {{totalPages}} | Total: {{totalRecords}}</label>
+</div>

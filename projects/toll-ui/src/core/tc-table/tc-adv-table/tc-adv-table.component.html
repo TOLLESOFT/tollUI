@@ -1,0 +1,19 @@
+<div class="flex flex-col w-full h-full overflow-auto bg-white">
+  <div *ngIf="showPagination" class="flex h-auto justify-end w-full p-4">
+    <tc-pagination
+      [pageSize]="pageSize"
+      [pageNumber]="pageNumber"
+      [totalPages]="totalPages"
+      [totalRecords]="totalRecords"
+      (pageNumberChange)="pageNumberChangeEvent($event)"
+      (pageSizeChange)="pageSizeChangeEvent($event)"
+    ></tc-pagination>
+  </div>
+  <div class="grow h-full w-full {{showPagination && 'overflow-auto'}}">
+    <div class="relative overflow-x-auto">
+      <table tcTable>
+        <ng-content></ng-content>
+      </table>
+    </div>
+  </div>
+</div>

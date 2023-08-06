@@ -1,0 +1,19 @@
+<button #iconButton type="button"
+        id="{{id}}"
+        [ngClass]="piClass"
+        [ngStyle]="piStyle"
+        aria-describedby="tooltip"
+        class="focus:ring-4 focus:outline-none
+{{ size === 'small' ? small : ''}}
+{{ size === 'large' ? large : '' }}
+{{ size === 'normal' ? normal : '' }}
+{{ rounded === 'full' ? 'rounded-full' : 'rounded-lg' }}
+{{button_color()}} ">
+  <i class="{{icon}}"></i>
+</button>
+
+<!--<div role="tooltip"-->
+<!--     *ngIf="toolTip"-->
+<!--     #toolTipElement-->
+<!--     id="{{toolId}}"-->
+<!--     class="fixed pointer-events-none px-4 text-sm top-0 left-0 py-1 rounded-lg bg-black/80 text-white whitespace-nowrap">{{toolTip}}</div>-->

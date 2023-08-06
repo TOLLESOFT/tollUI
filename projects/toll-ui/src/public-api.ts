@@ -5,128 +5,135 @@
 /**
  * button component
  */
-export * from './core/pi-button/pi-button.module'
-export * from './core/pi-button/button/button.component'
+export * from './core/tc-button/tc-button.module'
+export * from './core/tc-button/button/button.component'
 
 /**
  * input component
  */
-export * from './core/pi-input/pi-input.module'
-export * from './core/pi-input/input/input.component'
+export * from './core/tc-input/tc-input.module'
+export * from './core/tc-input/input/input.component'
 
 /**
  * check box component
  */
-export * from './core/pi-check-box/pi-check-box.module'
-export * from './core/pi-check-box/check-box/check-box.component'
+export * from './core/tc-check-box/tc-check-box.module'
+export * from './core/tc-check-box/check-box/check-box.component'
 
 /**
  * modal component
  */
-export * from './core/pi-modal/modal-ref'
-export * from './core/pi-modal/modal'
-export * from './core/pi-modal/modal-buttons'
-export * from './core/pi-modal/modal.service'
-export * from './core/pi-modal/modal/modal.component'
-export * from './core/pi-modal/pi-modal.module'
+export * from './core/tc-modal/modal-ref'
+export * from './core/tc-modal/modal'
+export * from './core/tc-modal/modal-buttons'
+export * from './core/tc-modal/modal.service'
+export * from './core/tc-modal/modal/modal.component'
+export * from './core/tc-modal/tc-modal.module'
 
 /**
  * text-area component
  */
-export * from './core/pi-text-area/text-area/text-area.component'
-export * from './core/pi-text-area/pi-text-area.module'
+export * from './core/tc-text-area/text-area/text-area.component'
+export * from './core/tc-text-area/tc-text-area.module'
 
 /**
  * loader component
  */
-export * from './core/pi-loader/loader/loader.component'
-export * from './core/pi-loader/pi-loader.module'
+export * from './core/tc-loader/loader/loader.component'
+export * from './core/tc-loader/tc-loader.module'
 
 /**
  * drawer component
  */
-export * from './core/pi-drawer/drawer-ref'
-export * from './core/pi-drawer/drawer'
-export * from './core/pi-drawer/drawer.service'
-export * from './core/pi-drawer/drawer/drawer.component'
-export * from './core/pi-drawer/pi-drawer.module'
+export * from './core/tc-drawer/drawer-ref'
+export * from './core/tc-drawer/drawer'
+export * from './core/tc-drawer/drawer.service'
+export * from './core/tc-drawer/drawer/drawer.component'
+export * from './core/tc-drawer/tc-drawer.module'
 
 /**
- * image picker component
+ * image tccker component
  */
-export * from './core/pi-image-picker/image-info'
-export * from './core/pi-image-picker/image-picker/image-picker.component'
-export * from './core/pi-image-picker/pi-image-picker.module'
+export * from './core/tc-image-picker/image-info'
+export * from './core/tc-image-picker/image-picker/image-picker.component'
+export * from './core/tc-image-picker/tc-image-picker.module'
 
 /**
  * notification component
  */
-// export * from './core/pi-notification/notification-info'
-// export * from './core/pi-notification/notification.service'
-// export * from './core/pi-notification/notification/notification.component'
-// export * from './core/pi-notification/pi-notification.module'
+// export * from './core/tc-notification/notification-info'
+// export * from './core/tc-notification/notification.service'
+// export * from './core/tc-notification/notification/notification.component'
+// export * from './core/tc-notification/tc-notification.module'
 
 /**
  * select list component
  */
-export * from './core/pi-select-list/search-item'
-export * from './core/pi-select-list/select-list/select-list.component'
-export * from './core/pi-select-list/pi-select-list.module'
+export * from './core/tc-select-list/search-item'
+export * from './core/tc-select-list/select-list/select-list.component'
+export * from './core/tc-select-list/tc-select-list.module'
+export * from './core/tc-select-list/select-list-option/select-list-option.component'
 
 /**
  * multi select list component
  */
-export * from './core/pi-select-list/multi-select-list/multi-select-list.component'
+export * from './core/tc-select-list/multi-select-list/multi-select-list.component'
 
 /**
  * card component
  */
-export * from './core/pi-card/card/card.component'
-export * from  './core/pi-card/pi-card.module'
+export * from './core/tc-card/card/card.component'
+export * from  './core/tc-card/tc-card.module'
 
 /**
  * ratings component
  */
 
-export * from './core/pi-ratings/ratings/ratings.component'
-export * from './core/pi-ratings/pi-ratings.module'
+export * from './core/tc-ratings/ratings/ratings.component'
+export * from './core/tc-ratings/tc-ratings.module'
 
 /**
  * icon button component
  */
-export * from './core/pi-icon-button/public-api'
+export * from './core/tc-icon-button/public-api'
 
 /**
  * avatar component
  */
-export * from './core/pi-avatar/avatar/avatar.component'
-export * from './core/pi-avatar/pi-avatar.module'
+export * from './core/tc-avatar/avatar/avatar.component'
+export * from './core/tc-avatar/tc-avatar.module'
 
 /**
  * avatar group component
  */
-export * from './core/pi-avatar-group/avatar-group/avatar-group.component'
-export * from './core/pi-avatar-group/pi-avatar-group.module'
+export * from './core/tc-avatar-group/avatar-group/avatar-group.component'
+export * from './core/tc-avatar-group/tc-avatar-group.module'
 
 /**
  * calendar component
  */
-export * from './core/pi-calendar/calendar/calendar.component'
-export * from './core/pi-calendar/pi-calendar.module'
+export * from './core/tc-calendar/calendar/calendar.component'
+export * from './core/tc-calendar/tc-calendar.module'
 
-export * from './core/pi-toll/pi-toll.module'
+export * from './core/tc-toll/tc-toll.module'
 
 /*
 * table component
 * */
-export * from './core/pi-table/table/table.component'
-export * from  './core/pi-table/pi-table.module'
-export * from './core/pi-table/table-actions'
-export * from './core/pi-table/table-header'
+export * from './core/tc-table/table/table.component'
+export * from  './core/tc-table/tc-table.module'
+export * from './core/tc-table/table-actions'
+export * from './core/tc-table/table-header'
+export * from './core/tc-table/tc-adv-table/tc-adv-table.component'
+export * from './core/tc-table/directives/tc-td.directive'
+export * from './core/tc-table/directives/tc-th.directive'
+export * from './core/tc-table/directives/tc-tr.directive'
+export * from './core/tc-table/directives/tc-table.directive'
+export * from './core/tc-table/directives/tc-thead.directive'
 
 /*
 * pagination component
 * */
-export * from './core/pi-pagination/pi-pagination.module'
-export * from './core/pi-pagination/pagination'
-export * from './core/pi-pagination/pi-pagination/pi-pagination.component'
+export * from './core/tc-pagination/tc-pagination.module'
+export * from './core/tc-pagination/pagination'
+export * from './core/tc-pagination/pagination/pagination.component'

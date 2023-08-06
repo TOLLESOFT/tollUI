@@ -1,0 +1,17 @@
+<div [id]="id" class="modal fixed inset-0 z-[999] flex flex-wrap {{center ? ' lg:content-center' : height !== 'fill' ? 'lg:content-start pt-5' : 'lg:content-start py-5'}} h-full w-full justify-center">
+    <div @enterLeave *ngIf="open" class="bg-white modal-content {{rounded && 'rounded-lg'}} {{modalCss}} {{height === 'fill' && 'h-full'}}">
+        <ng-container [ngSwitch]="contentType">
+            <ng-container *ngSwitchCase="'string'">
+                <div [innerHTML]="content"></div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'template'">
+                <ng-container *ngTemplateOutlet="$any(content); context: context"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'component'">
+                <ng-container *ngComponentOutlet="$any(content)"></ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
