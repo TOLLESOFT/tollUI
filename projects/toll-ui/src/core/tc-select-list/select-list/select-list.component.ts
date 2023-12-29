@@ -184,6 +184,19 @@ export class SelectListComponent implements OnInit, ControlValueAccessor, AfterV
         }
       }
     }))
+
+    fromEvent(document, 'click').subscribe({
+      next: (_) => {
+        if (!document.activeElement?.attributes.getNamedItem('select-list')) {
+          const ele = document.getElementsByClassName('select-list-container');
+          for (let i = 0; i< ele.length;i++) {
+            if (!ele.item(i)?.classList.contains('hidden')) {
+              ele.item(i)?.classList.add('hidden')
+            }
+          }
+        }
+      }
+    })
   }
 
 }

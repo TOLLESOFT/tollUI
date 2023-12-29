@@ -15,6 +15,12 @@ export * from './core/tc-input/tc-input.module'
 export * from './core/tc-input/input/input.component'
 
 /**
+ * datepicker component
+ */
+export * from './core/tc-datepicker/tc-datepicker.module'
+export * from './core/tc-datepicker/date-picker/date-picker.component'
+
+/**
  * check box component
  */
 export * from './core/tc-check-box/tc-check-box.module'
@@ -73,6 +79,7 @@ export * from './core/tc-select-list/search-item'
 export * from './core/tc-select-list/select-list/select-list.component'
 export * from './core/tc-select-list/tc-select-list.module'
 export * from './core/tc-select-list/select-list-option/select-list-option.component'
+export * from './core/tc-select-list/multi-select-list/multi-select-list.component'
 
 /**
  * multi select list component
@@ -124,7 +131,6 @@ export * from './core/tc-table/table/table.component'
 export * from  './core/tc-table/tc-table.module'
 export * from './core/tc-table/table-actions'
 export * from './core/tc-table/table-header'
-export * from './core/tc-table/tc-adv-table/tc-adv-table.component'
 export * from './core/tc-table/directives/tc-td.directive'
 export * from './core/tc-table/directives/tc-th.directive'
 export * from './core/tc-table/directives/tc-tr.directive'
@@ -137,3 +143,6 @@ export * from './core/tc-table/directives/tc-thead.directive'
 export * from './core/tc-pagination/tc-pagination.module'
 export * from './core/tc-pagination/pagination'
 export * from './core/tc-pagination/pagination/pagination.component'
+
+export * from  './core/tc-tabs/tc-tabs.module'
+export * from './core/tc-tabs/tabs/tabs.component'

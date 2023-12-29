@@ -5,7 +5,7 @@ import {Drawer} from "./drawer";
 
 export class DrawerRef<R = any, T = any> {
     afterClosed$ = new Subject<OverlayCloseEvent<R | undefined | null>>();
-
+    afterOpened$ = new Subject<any>();
     constructor(
         private overlay: OverlayRef,
         public drawer: Drawer<T>
@@ -19,6 +19,10 @@ export class DrawerRef<R = any, T = any> {
 
     close(data?: R) {
         this._close('close', data);
+    }
+
+    open(data?: T) {
+        this.afterOpened$.next(data);
     }
 
     private _close(type: 'backdropClick' | 'close', data: R | undefined | null) {

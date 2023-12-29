@@ -29,7 +29,7 @@ export class ModalRef<R = any, T = any> {
         type,
         data
       });
-      timer(50).subscribe({
+      timer(100).subscribe({
         next: (()=> {
           this.overlay.dispose();
           this.afterClosed$.complete();

@@ -1,12 +1,9 @@
 import {
-  AfterViewInit,
-  Component, EventEmitter,
+  ChangeDetectorRef,
+  Component,
   Input,
-  OnChanges,
-  OnInit, Output, SimpleChanges
+  OnChanges,SimpleChanges
 } from '@angular/core';
-import {TableHeader} from "../table-header";
-import {TableActions} from "../table-actions";
 
 @Component({
   selector: 'tc-table',
@@ -14,25 +11,12 @@ import {TableActions} from "../table-actions";
   styleUrls: ['./table.component.scss']
 
 })
-export class TableComponent implements OnInit, OnChanges{
-  @Input() data: any[] = []
-  @Input() imageFields: string[] = [];
-  @Input() headers: TableHeader[] = [];
-  @Input() emptyMessage: string = 'You have no data to display.';
-  @Input() actions: TableActions[] = [];
+export class TableComponent implements OnChanges{
+  @Input() data: Array<any>[] = [];
+  mainData: any[] = [];
+
   @Input() showPagination = false;
   @Input() usePagination = false;
-  @Input() checkedField = '';
-
-  @Input() useChildTable = false;
-  @Input() childTableField: string  = '';
-  @Input() childTableHeaders: TableHeader[] = [];
-  @Input() childActions: TableActions[] = [];
-
-  @Input() allowCheckBoxes = false;
-  @Input() allowChildCheckBoxes = false;
-  allSelected= false;
-  selectedItems: any[] = [];
 
   pageSize = 10
   pageNumber = 1;
@@ -42,60 +26,22 @@ export class TableComponent implements OnInit, OnChanges{
   startCount = 0;
   endCount = 0;
 
-  @Input() showNumbering = false;
-  mainData: any[] = [];
+  image: any;
 
-  @Output() OnActionPerformed = new EventEmitter();
-  @Output() OnChildActionPerformed = new EventEmitter();
-  @Output() OnItemChecked = new EventEmitter();
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
   }
-
-  ngOnInit(): void {
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
-      this.checkIfAllSelected();
       this.mainData = changes['data'].currentValue;
       if (this.usePagination) {
         this.calcPagination();
       }
     }
-  }
 
-  checkIfAllSelected = () => {
-    if (!this.checkedField) {
-      this.checkedField = 'checked';
-    }
-    if (this.allowCheckBoxes) {
-      this.data.forEach((item: any) => {
-        const find = this.selectedItems.find(u => u.id === item.id);
-        if (!find) {
-          if (this.allSelected) {
-            item[this.checkedField] = this.allSelected;
-          }
-        }
-      })
-      this.selectedItems = this.data.filter(u => u[this.checkedField] === true);
-      this.allSelected = this.data.every(u => u[this.checkedField] === true);
-      this.OnItemChecked.emit(this.selectedItems);
-    }
-  }
-
-  pageNumberChangeEvent = (event: number) => {
-    this.pageNumber = event;
-    this.calcPagination();
-  }
-
-  pageSizeChangeEvent = (event: number) => {
-    this.pageSize = event;
-    this.calcPagination();
+    this.cd.detectChanges();
   }
 
   calcPagination = () => {
-    this.checkIfAllSelected();
     this.mainData = this.data;
     this.totalRecords = this.mainData.length;
     this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
@@ -113,65 +59,97 @@ export class TableComponent implements OnInit, OnChanges{
     }
   }
 
+  pageNumberChangeEvent = (event: number) => {
+    this.pageNumber = event;
+    this.calcPagination();
+  }
+
+  pageSizeChangeEvent = (event: number) => {
+    this.pageSize = event;
+    this.calcPagination();
+  }
+
+  sort(field: string, order: 'asc' | 'dsc' = 'asc') {
+
+    let compareASC = (a: any, b: any) => {
+      let aValue;
+      let bValue;
+
+      if (field.includes('.')) {
+        aValue = this.getValue(a, field.split('.'));
+        bValue = this.getValue(b, field.split('.'));
+
+        return aValue?.localeCompare(bValue);
+      } else {
+        return a[field].localeCompare(b[field])
+      }
+    }
+
+    let compareDSC = (a: any, b: any) => {
+      let aValue ;
+      let bValue;
+
+      if (field.includes('.')) {
+        aValue = this.getValue(a, field.split('.'));
+        bValue = this.getValue(b, field.split('.'));
+        return bValue?.localeCompare(aValue);
+      } else {
+        return b[field].localeCompare(a[field])
+      }
+    }
+
+    if (order === 'asc') {
+      this.data.sort(compareASC);
+    } else {
+      this.data.sort(compareDSC);
+    }
+    this.calcPagination();
+  }
+  sortNumber(field: string, order: 'asc' | 'dsc' = 'asc') {
+
+    let compareASC = (a: any, b: any) => {
+      let aValue;
+      let bValue;
+
+      if (field.includes('.')) {
+        aValue = this.getValue(a, field.split('.'));
+        bValue = this.getValue(b, field.split('.'));
+        return parseFloat(aValue) - parseFloat(bValue);
+      } else {
+        return parseFloat(a[field]) - parseFloat(b[field]);
+      }
+    }
+
+    let compareDSC = (a: any, b: any) => {
+      let aValue ;
+      let bValue;
+
+      if (field.includes('.')) {
+        aValue = this.getValue(a, field.split('.'));
+        bValue = this.getValue(b, field.split('.'));
+        return parseFloat(bValue) - parseFloat(aValue);
+      } else {
+        return parseFloat(b[field]) - parseFloat(a[field]);
+      }
+    }
+
+    if (order === 'asc') {
+      this.data.sort(compareASC);
+    } else {
+      this.data.sort(compareDSC);
+    }
+    this.calcPagination();
+  }
+
   getValue = (item: any ,value: any[]):any => {
     let result;
     for (let i = 0; i < value.length; i++) {
       if (!result) {
-        result = item[value[i]]
+        result = item?.[value[i]]
       } else {
-        result = result[value[i]]
+        result = result?.[value[i]]
       }
     }
     return result;
-  }
-
-  calcColSpan = () => {
-    let length = this.headers.length + 1;
-    if (this.actions.length > 0) {
-      length += 1;
-    }
-    if (this.showNumbering) {
-      length += 1;
-    }
-    if (this.allowCheckBoxes) {
-      length += 1;
-    }
-    return length;
-  }
-
-  collapseChild = (item: any) => {
-    this.mainData.forEach((u: any) => {
-      if (u !== item) {
-        u.expand = false
-      }
-    });
-    item.expand = !item.expand;
-  }
-
-  selectAll = (value: boolean) => {
-    this.data.forEach(data => data[this.checkedField] = value);
-    this.mainData.forEach(data => data[this.checkedField] = value);
-    this.selectedItems = this.data.filter(u => u[this.checkedField]);
-    this.OnItemChecked.emit(this.selectedItems);
-  }
-
-  checkItem = (item: any,value: boolean) => {
-    this.allSelected = this.mainData.every(u => u[this.checkedField]);
-    if (value) {
-      const find = this.selectedItems.find(u => u === item);
-      if (find) {
-        this.OnItemChecked.emit(this.selectedItems);
-      } else {
-        item[this.checkedField] = true;
-        this.selectedItems.push(item);
-        this.OnItemChecked.emit(this.selectedItems);
-      }
-    } else {
-      const find = this.selectedItems.find(u => u === item);
-      if (find) {
-        this.selectedItems.splice(this.selectedItems.findIndex(u => u === item), 1);
-        this.OnItemChecked.emit(this.selectedItems);
-      }
-    }
   }
 }

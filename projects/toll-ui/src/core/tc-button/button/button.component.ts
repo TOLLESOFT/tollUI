@@ -87,10 +87,10 @@ export class ButtonComponent implements OnInit, OnChanges {
   }
 
   button_state() {
-    this.primary = `text-white ${(this.disabled || this.disabled === '') ? 'bg-blue-400 hover:bg-blue-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800'}  focus:ring-4 focus:outline-none focus:ring-blue-300`;
-    this.success = `text-white ${(this.disabled || this.disabled === '') ? 'bg-green-400 hover:bg-green-400 cursor-not-allowed':'bg-green-700 hover:bg-green-800'} focus:ring-4 focus:outline-none focus:ring-green-300`;
-    this.danger = `text-white ${(this.disabled || this.disabled === '') ? 'bg-red-400 hover:bg-red-400 cursor-not-allowed':'bg-red-600 hover:bg-red-700'} focus:ring-4 focus:outline-none focus:ring-red-200`;
-    this.warning = `text-white ${(this.disabled || this.disabled === '') ? 'bg-yellow-400 hover:bg-yellow-400 cursor-not-allowed':'bg-yellow-500 hover:bg-yellow-600'}  focus:ring-4 focus:outline-none focus:ring-yellow-300`;
+    this.primary = `text-white ${(this.disabled || this.disabled === '') ? 'bg-blue-400 border-blue-400 hover:bg-blue-400 cursor-not-allowed' : 'bg-blue-700 border-blue-700 hover:border-blue-800 hover:bg-blue-800'}  focus:ring-4 focus:outline-none focus:ring-blue-300`;
+    this.success = `text-white ${(this.disabled || this.disabled === '') ? 'bg-green-400 hover:bg-green-400 border-green-400 cursor-not-allowed':'bg-green-700 border-green-700 hover:border-green-800 hover:bg-green-800'} focus:ring-4 focus:outline-none focus:ring-green-300`;
+    this.danger = `text-white ${(this.disabled || this.disabled === '') ? 'bg-red-400 hover:bg-red-400 border-red-400 cursor-not-allowed':'bg-red-600 border-red-600 hover:border-red-700 hover:bg-red-700'} focus:ring-4 focus:outline-none focus:ring-red-200`;
+    this.warning = `text-white ${(this.disabled || this.disabled === '') ? 'bg-yellow-400 border-yellow-400 hover:bg-yellow-400 cursor-not-allowed':'bg-yellow-500 border-blue-500 hover:border-yellow-600 hover:bg-yellow-600'}  focus:ring-4 focus:outline-none focus:ring-yellow-300`;
 
     this.primary_outline = `${(this.disabled || this.disabled === '') ? 'text-blue-400 border-blue-400 cursor-not-allowed':'text-blue-700 border-blue-700 hover:bg-blue-800 hover:text-white'} border focus:ring-4 focus:outline-none focus:ring-blue-300`;
     this.success_outline = `${(this.disabled || this.disabled === '') ? 'text-green-400 border-green-400 cursor-not-allowed':'text-green-700 hover:text-white border-green-700 hover:bg-green-800'} border focus:ring-4 focus:outline-none focus:ring-green-300`;
