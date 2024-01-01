@@ -146,3 +146,10 @@ export * from './core/tc-pagination/pagination/pagination.component'
 
 export * from  './core/tc-tabs/tc-tabs.module'
 export * from './core/tc-tabs/tabs/tabs.component'
+
+export * from './core/tc-alert/tc-alert.module'
+export * from './core/tc-alert/alert.service'
+export * from './core/tc-alert/alert/alert.component'
+
+export * from './core/tc-indeterminate-progress/tc-indeterminate-progress.component'
+export * from  './core/tc-indeterminate-progress/tc-indeterminate-progress.module'

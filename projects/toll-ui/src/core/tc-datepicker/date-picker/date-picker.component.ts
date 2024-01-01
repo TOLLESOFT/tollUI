@@ -143,6 +143,19 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
       }
     });
 
+      fromEvent(document, 'click').subscribe({
+          next: (_) => {
+              if (!document.activeElement?.attributes.getNamedItem('date-picker')) {
+                  const ele = document.getElementsByClassName('date-picker-container');
+                  for (let i = 0; i< ele.length;i++) {
+                      if (!ele.item(i)?.classList.contains('hidden')) {
+                          ele.item(i)?.classList.add('hidden')
+                      }
+                  }
+              }
+          }
+      })
+
     element.addEventListener('keyup', (event) => {
       const element = document.getElementById(this.id) as HTMLInputElement;
       const newFormat = this.format

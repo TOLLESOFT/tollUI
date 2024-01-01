@@ -12,7 +12,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {BaseService} from "../../base.service";
 import {SearchItem} from "../search-item";
-import {fromEvent} from "rxjs";
+import {fromEvent, Subscription} from "rxjs";
 
 @Component({
   selector: 'tc-multi-select-list',
@@ -59,6 +59,9 @@ export class MultiSelectListComponent implements OnInit, ControlValueAccessor, A
   @Input() dataLabel: any;
   @Input() dataId: any;
   @Input() disabled = false;
+    hasFocus = false;
+
+    subscriptions: Subscription[] = [];
 
   constructor() {
   }
@@ -159,27 +162,88 @@ export class MultiSelectListComponent implements OnInit, ControlValueAccessor, A
     return !!display;
   }
 
-  ngAfterViewInit(): void {
-    const element = document.getElementById(this.id) as HTMLDivElement;
-    const mainElement = document.getElementById(this.mainId) as HTMLDivElement;
-    const dropElement = document.getElementById(this.dropItemId) as HTMLDivElement
-    fromEvent(element, 'click').subscribe({
-      next: (_) => {
-        const ele = document.getElementsByClassName('multi-select-list-container');
-        for (let i = 0; i< ele.length;i++) {
-          if (!ele.item(i)?.classList.contains('hidden')) {
-            ele.item(i)?.classList.add('hidden')
-          }
-        }
-        document.getElementsByClassName(this.id).item(0)?.classList.remove('hidden');
-        const space = window.innerHeight - mainElement.offsetTop + mainElement.clientHeight;
+  // ngAfterViewInit(): void {
+  //   const element = document.getElementById(this.id) as HTMLDivElement;
+  //   const mainElement = document.getElementById(this.mainId) as HTMLDivElement;
+  //   const dropElement = document.getElementById(this.dropItemId) as HTMLDivElement
+  //   fromEvent(element, 'click').subscribe({
+  //     next: (_) => {
+  //       const ele = document.getElementsByClassName('multi-select-list-container');
+  //       for (let i = 0; i< ele.length;i++) {
+  //         if (!ele.item(i)?.classList.contains('hidden')) {
+  //           ele.item(i)?.classList.add('hidden')
+  //         }
+  //       }
+  //       document.getElementsByClassName(this.id).item(0)?.classList.remove('hidden');
+  //       const space = window.innerHeight - mainElement.offsetTop + mainElement.clientHeight;
+  //
+  //       if (dropElement.clientHeight > space) {
+  //         dropElement.style.bottom = `${mainElement.clientHeight}px`;
+  //       }
+  //     }
+  //   })
+  // }
 
-        if (dropElement.clientHeight > space) {
-          dropElement.style.bottom = `${mainElement.clientHeight}px`;
-        }
-      }
-    })
-  }
+    ngAfterViewInit(): void {
+        const element = document.getElementById(this.id) as HTMLDivElement;
+        const mainElement = document.getElementById(this.mainId) as HTMLDivElement;
+        const dropElement = document.getElementById(this.dropItemId) as HTMLDivElement
+
+        this.subscriptions.push(fromEvent(element, 'click').subscribe({
+            next: (_) => {
+                const ele = document.getElementsByClassName('multi-select-list-container');
+                for (let i = 0; i< ele.length;i++) {
+                    if (!ele.item(i)?.classList.contains('hidden')) {
+                        if (ele.item(i)?.id !== this.dropItemId) {
+                            ele.item(i)?.classList.add('hidden')
+                        }
+                    }
+                }
+
+                document.getElementById(this.dropItemId)?.classList.toggle('hidden');
+                const checkForHidden = document.getElementById(this.dropItemId)?.classList.contains('hidden');
+                this.hasFocus = !checkForHidden;
+                const space = window.innerHeight - mainElement.offsetTop + mainElement.clientHeight - 100;
+
+                if (dropElement.clientHeight > space) {
+                    dropElement.style.bottom = `${mainElement.clientHeight}px`;
+                }
+            }
+        }))
+
+        this.subscriptions.push(fromEvent(element, 'input').subscribe({
+            next: (_) => {
+                const ele = document.getElementsByClassName('multi-select-list-container');
+                for (let i = 0; i< ele.length;i++) {
+                    if (!ele.item(i)?.classList.contains('hidden')) {
+                        if (ele.item(i)?.id !== this.dropItemId) {
+                            ele.item(i)?.classList.add('hidden')
+                        }
+                    }
+                }
+
+                document.getElementById(this.dropItemId)?.classList.remove('hidden');
+                const space = window.innerHeight - mainElement.offsetTop + mainElement.clientHeight - 100;
+
+                if (dropElement.clientHeight > space) {
+                    dropElement.style.bottom = `${mainElement.clientHeight}px`;
+                }
+            }
+        }))
+
+        fromEvent(document, 'click').subscribe({
+            next: (_) => {
+                if (!document.activeElement?.attributes.getNamedItem('multi-select-list')) {
+                    const ele = document.getElementsByClassName('multi-select-list-container');
+                    for (let i = 0; i< ele.length;i++) {
+                        if (!ele.item(i)?.classList.contains('hidden')) {
+                            ele.item(i)?.classList.add('hidden')
+                        }
+                    }
+                }
+            }
+        })
+    }
 
 }
 

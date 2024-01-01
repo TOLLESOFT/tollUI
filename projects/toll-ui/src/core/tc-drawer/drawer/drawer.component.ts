@@ -36,13 +36,20 @@ export class DrawerComponent implements OnInit, AfterViewInit {
     context: any;
     title?: string;
     open = true;
-    constructor(private ref: DrawerRef) { }
+    constructor(private ref: DrawerRef) {
+        this.ref.afterClosed$.subscribe({
+            next: value => {
+                this.open = false;
+            }
+        })
+    }
 
     ngAfterViewInit(): void {
-        this.ref.open(this);
+        this.ref.open(this.content);
     }
 
     close() {
+        this.open = false;
         this.ref.close(null);
     }
 

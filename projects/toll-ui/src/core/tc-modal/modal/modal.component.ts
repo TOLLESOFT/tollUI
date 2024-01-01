@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, Type} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, Type} from '@angular/core';
 import {ModalButtons} from "../modal-buttons";
 import {ModalRef} from "../modal-ref";
 import {animate, style, transition, trigger} from "@angular/animations";
@@ -18,7 +18,7 @@ import {BaseService} from "../../base.service";
     ])
   ])]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, AfterViewInit {
   id = BaseService.uuid();
   contentType!: 'template' | 'string' | 'component';
   content!: string | TemplateRef<any> | Type<any>;
@@ -39,6 +39,10 @@ export class ModalComponent implements OnInit {
       })
     })
   }
+
+    ngAfterViewInit(): void {
+        this.ref.open(this.content);
+    }
 
   close() {
     this.ref.close(null);

@@ -12,18 +12,17 @@
                [readOnly]="!searchable"
                [(ngModel)]="displayLabel"
                [disabled]="disabled"
+               (focus)="focus()"
+               (blur)="blur()"
                (ngModelChange)="searchList($event)"
-               select-list="pi-select-list"
+               select-list="tc-select-list"
                class="{{defaultClass}} disabled:bg-gray-200 group {{invalid ? (required ? invalidClass: inputValidClass) : inputValidClass}} {{size === 'small' && smallSize}} {{size === 'normal' && defaultSize}} {{size === 'large' && largeSize}}"/>
         <div class="absolute inset-y-0 right-0 flex items-center pr-3 {{allowClear && (displayLabel ? null : 'pointer-events-none')}}">
             <div class="flex space-x-2 items-center">
               <ng-container *ngIf="allowClear">
                 <i *ngIf="displayLabel" (click)="clearItem()" class="pi pi-times text-gray-500 text-xs cursor-pointer"></i>
               </ng-container>
-              <div class="flex flex-col">
-                <i class="pi pi-chevron-up text-gray-500 text-xs" ></i>
-                <i class="pi pi-chevron-down text-gray-500 text-xs" ></i>
-              </div>
+                <i class="pi pi-chevron-down text-gray-500 text-xs {{hasFocus && 'rotate-180'}}" ></i>
             </div>
         </div>
     </div>
