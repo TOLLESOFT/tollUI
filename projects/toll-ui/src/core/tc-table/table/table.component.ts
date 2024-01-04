@@ -13,6 +13,7 @@ import {
 })
 export class TableComponent implements OnChanges{
   @Input() data: Array<any>[] = [];
+  @Input() fullScreen: boolean = false;
   mainData: any[] = [];
 
   @Input() showPagination = false;

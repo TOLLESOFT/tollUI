@@ -31,7 +31,7 @@ export class DrawerRef<R = any, T = any> {
         data
       });
         this.afterClosed$.complete();
-      timer(500).subscribe({
+      timer(200).subscribe({
         next:(() => {
           this.overlay.dispose();
         })
