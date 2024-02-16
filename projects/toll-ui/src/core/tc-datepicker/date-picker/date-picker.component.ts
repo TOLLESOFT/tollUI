@@ -1,18 +1,14 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   forwardRef,
-  HostListener,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges
+  OnInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {BaseService} from "../../base.service";
-import {finalize, from, fromEvent, timer} from "rxjs";
+import {fromEvent, timer} from "rxjs";
 import {format, isValid, parse} from "date-fns";
+import {BaseService} from "../../base.service";
 
 @Component({
   selector: 'tc-date-picker',
@@ -42,6 +38,8 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
   @Input() disablePastDates: boolean = false;
   @Input() disabled = false;
 
+  @Input() viewType: 'month' | 'date' = 'date';
+
 
   @Input() size: 'small' | 'normal' | 'large' | undefined = 'normal';
   specialChars = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/g;
@@ -66,7 +64,11 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
 
   ngOnInit(): void {
-    this.model = format(this.dateValue, this.format);
+    if(this.viewType === 'date') {
+      this.model = format(this.dateValue, this.format);
+    } else {
+      this.model = format(this.dateValue, 'MMMM yyyy');
+    }
   }
 
   formatString = (maskFormat: string, stringToFormat: string, character?: string): any => {
@@ -118,7 +120,11 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   writeValue(obj: Date): void {
     this.dateValue = new Date(obj);
-    this.model = format(new Date(this.dateValue), this.format);
+    if(this.viewType === 'date') {
+      this.model = format(new Date(this.dateValue), this.format);
+    } else {
+      this.model = format(new Date(this.dateValue), 'MMMM yyyy');
+    }
   }
 
 
@@ -193,36 +199,40 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   modelValueChange = (date: string) => {
-    const newFormat = this.format
-      .replace('MM', 'DD')
-      .replace('dd', 'DD')
-      .replace('yyyy', 'DDDD');
+    if(this.viewType === 'date') {
+      const newFormat = this.format
+        .replace('MM', 'DD')
+        .replace('dd', 'DD')
+        .replace('yyyy', 'DDDD');
 
-    const actualValue = date.replace(this.specialChars, '');
-    const newStr = this.formatString(
-      newFormat,
-      actualValue,
-      '_'
-    );
+      const actualValue = date.replace(this.specialChars, '');
+      const newStr = this.formatString(
+        newFormat,
+        actualValue,
+        '_'
+      );
 
-    this.currentValue = this.formatString(
-      newFormat,
-      actualValue,
-    );
+      this.currentValue = this.formatString(
+        newFormat,
+        actualValue,
+      );
 
-    this.currentValue = this.checkLastCharacter(this.currentValue, '/');
-    this.model = newStr;
-    const newDate = parse(newStr, this.format, new Date());
-    if (isValid(newDate)) {
-      if (this.required) {
-        this.invalid = false;
+      this.currentValue = this.checkLastCharacter(this.currentValue, '/');
+      this.model = newStr;
+      const newDate = parse(newStr, this.format, new Date());
+      if (isValid(newDate)) {
+        if (this.required) {
+          this.invalid = false;
+        }
+        this.dateValue = newDate;
+        this.onChange(this.dateValue);
+      } else {
+        if (this.required) {
+          this.invalid = true;
+        }
       }
-      this.dateValue = newDate;
-      this.onChange(this.dateValue);
     } else {
-      if (this.required) {
-        this.invalid = true;
-      }
+      this.model = format(new Date(date), 'M');
     }
   }
 
@@ -235,7 +245,11 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   selectDate = (date: Date) => {
-    this.model = format(new Date(date), this.format);
-    this.onChange(new Date(date));
+    if(this.viewType === 'date') {
+      this.model = format(date, this.format);
+    } else {
+      this.model = format(date, 'MMMM yyyy');
+    }
+    this.onChange(date);
   }
 }

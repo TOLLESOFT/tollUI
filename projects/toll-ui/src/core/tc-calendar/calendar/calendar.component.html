@@ -51,20 +51,25 @@
     </div>
 </ng-container>
 <ng-container>
-    <div class="relative flex w-[300px] p-2">
+    <div class="relative flex">
         <ng-container *ngIf="smallCalendarView === 'month'">
-            <div>
-                <div class="flex justify-between px-2 mb-4">
-                    <div class="flex space-x-2 items-center">
-                      <label (click)="smallCalendarView = 'all month'" class="cursor-pointer block text-[13px]">{{AllMonths[currentDate.getMonth()]}}</label>
-                      <label (click)="smallCalendarView = 'year'" class="cursor-pointer block text-[13px]">{{selectedYear}}</label>
-                    </div>
-
-                    <div class="flex space-x-2 items-center">
-                        <i (click)="GetPreviousMonth()" class="cursor-pointer text-gray-500 text-[13px] tc tc-chevron-left"></i>
-                        <i (click)="GetNextMonth()" class="cursor-pointer text-gray-500 text-[13px] tc tc-chevron-right"></i>
-                    </div>
+            <div class="divide-y">
+              <div class="flex items-center justify-between w-full divide-x">
+                <div (click)="GetPreviousMonth()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <i  class="text-[13px] fa fa-chevron-left"></i>
                 </div>
+                <div (click)="GetNextMonth()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <i  class="text-[13px] fa fa-chevron-right"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between w-full divide-x">
+                <div (click)="smallCalendarView = 'all month'" class="w-full flex justify-center group p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="block text-[13px] group-hover:cursor-pointer">{{AllMonths[currentDate.getMonth()]}}</label>
+                </div>
+                <div (click)="smallCalendarView = 'year'" class="w-full flex cursor-pointer group justify-center p-2 hover:bg-blue-600 hover:text-white">
+                  <label  class=" block text-[13px] group-hover:cursor-pointer">{{selectedYear}}</label>
+                </div>
+              </div>
                 <div class="h-auto flex items-center">
                     <ng-container *ngFor="let days of AllDays">
                         <div class="w-10 h-10 flex items-center justify-center">
@@ -142,25 +147,35 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                <div class="flex justify-between px-2 mt-2 items-center">
+                <div class="flex justify-between p-2 mt-2 items-center">
                     <span class="block text-[13px] ">today: {{today | date : 'MM/dd/yyyy'}}</span>
                     <tc-button (click)="setToday()" size="extra small">today</tc-button>
                 </div>
             </div>
         </ng-container>
+
         <ng-container *ngIf="smallCalendarView === 'all month'">
-          <div class="w-full">
-            <div class="flex justify-between px-4 mb-4 items-center">
-              <div class="flex space-x-2 items-center">
-                <label (click)="smallCalendarView = 'month'" class="cursor-pointer block text-[13px]">
+          <div class="divide-y" [ngStyle]="{'width': 78*3+16 +'px'}">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center justify-between w-full divide-x" *ngIf="this.dateView === 'month'">
+                <div class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="cursor-pointer block text-[13px]">{{AllMonths[currentDate.getMonth()]}}</label>
+                </div>
+                <div (click)="smallCalendarView = 'year'" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="cursor-pointer block text-[13px]">{{selectedYear}}</label>
+                </div>
+              </div>
+              <div (click)="smallCalendarView = 'month'" class="flex items-center p-1" *ngIf="this.dateView !== 'month'">
+                <label class="hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white p-1 block text-[13px]">
                   BACK
                 </label>
               </div>
             </div>
-            <div class="border-gray-300 overflow-hidden w-full divide-y">
-              <div class="grid grid-cols-3 w-full">
-                <ng-container *ngFor="let month of AllMonths">
-                  <div class="w-full h-14 flex items-center justify-center hover:cursor-pointer" (click)="selectMonth(month)">
+            <div class="border-gray-300 overflow-hidden w-full ">
+              <div class="grid grid-cols-3 w-full p-2">
+                <ng-container *ngFor="let month of AllMonths; let i = index">
+                  <div [class.text-blue-600]="i === monthCount-1"
+                       class="w-[78px] h-[78px] flex items-center justify-center hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white" (click)="selectMonth(month)">
                     <div class="w-8 h-8 flex items-center justify-center">
                       <span class="text-[14px] leading-none">{{month.slice(0,3)}}</span >
                     </div>
@@ -172,25 +187,27 @@
         </ng-container>
 
       <ng-container *ngIf="smallCalendarView === 'year'">
-        <div class="w-full">
-          <div class="flex justify-between px-4 mb-4 items-center">
-            <div class="flex space-x-2 items-center">
-              <label (click)="smallCalendarView = 'month'" class="cursor-pointer block text-[13px]">
+        <div class="divide-y" [ngStyle]="{'width': 78*4 +'px'}">
+          <div class="flex items-center justify-between w-full divide-x">
+            <div class="flex p-1 items-center">
+              <label (click)="updateView('month')" class="hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white p-1 block text-[13px]">
                 BACK
               </label>
             </div>
-            <div class="flex space-x-2 items-center">
-              <i (click)="GetPreviousYears()" class="cursor-pointer text-gray-500 text-[13px] tc tc-chevron-left">
-              </i>
-              <i (click)="GetNextYears()" class="cursor-pointer text-gray-500 text-[13px] tc tc-chevron-right">
-              </i>
+          </div>
+          <div class="flex items-center justify-between w-full divide-x">
+            <div (click)="GetPreviousYears()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+              <i  class="text-[13px] fa fa-chevron-left"></i>
+            </div>
+            <div (click)="GetNextYears()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+              <i  class="text-[13px] fa fa-chevron-right"></i>
             </div>
           </div>
 
-          <div class="border-gray-300 overflow-hidden w-full divide-y">
-            <div class="grid grid-cols-4 w-full">
+          <div class="border-gray-300 overflow-hidden w-full">
+            <div class="grid grid-cols-4 w-full p-2">
               <ng-container *ngFor="let year of years">
-                <div class="w-full h-14 flex items-center justify-center hover:cursor-pointer hover:bg-blue-600 hover:rounded" (click)="selectYear(year); smallCalendarView = 'month'">
+                <div [class.text-blue-600]="selectedYear === year" class="w-[78px] h-[78px] flex items-center justify-center hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white" (click)="selectYear(year); updateView('month')">
                   <div class="'w-8 h-8 flex items-center justify-center">
                     <span class='text-[14px] leading-none'>{{year}}</span>
                   </div>
