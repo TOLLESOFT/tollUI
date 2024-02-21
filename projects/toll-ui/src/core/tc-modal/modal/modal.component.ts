@@ -25,7 +25,6 @@ export class ModalComponent implements OnInit, AfterViewInit {
   modalSize: 'normal' | 'large' | undefined = 'normal';
   fullScreen: boolean | undefined = false;
   backdropClose: boolean | undefined = true;
-  rounded = '';
   buttons: Array<ModalButtons> = [];
   context: any;
   modalCss = '';
@@ -52,7 +51,6 @@ export class ModalComponent implements OnInit, AfterViewInit {
     this.content = this.ref.modal.content;
     this.modalSize = this.ref.modal.size;
     this.fullScreen = this.ref.modal.fullScreen;
-    this.rounded = `rounded-${this.ref.modal.rounded}`;
     if (this.ref.modal.center !== undefined) {
       this.center = this.ref.modal.center;
     }

@@ -10,5 +10,4 @@ export class Modal<T> {
   center?: boolean | undefined;
   backdropClose?: boolean;
   buttons?: ModalButtons[];
-  rounded?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'none'
 }
