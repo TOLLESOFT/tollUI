@@ -1,5 +1,5 @@
 <div [id]="id" class="modal fixed inset-0 z-[999] flex flex-wrap {{center ? ' lg:content-center' : height !== 'fill' ? 'lg:content-start pt-5' : 'lg:content-start py-5'}} h-full w-full justify-center">
-    <div [class.animate__zoomOut]="!open" [class.animate__zoomIn]="open" class=" bg-white modal-content animate__animated animate__faster {{rounded && 'rounded-lg'}} {{modalCss}} {{height === 'fill' && 'h-full'}}">
+    <div [class.animate__zoomOut]="!open" [class.animate__zoomIn]="open" class=" bg-white modal-content animate__animated animate__faster {{rounded}} {{modalCss}} {{height === 'fill' && 'h-full'}}">
         <ng-container [ngSwitch]="contentType">
             <ng-container *ngSwitchCase="'string'">
                 <div [innerHTML]="content"></div>

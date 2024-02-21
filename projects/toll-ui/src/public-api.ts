@@ -153,3 +153,11 @@ export * from './core/tc-alert/alert/alert.component'
 
 export * from './core/tc-indeterminate-progress/tc-indeterminate-progress.component'
 export * from  './core/tc-indeterminate-progress/tc-indeterminate-progress.module'
+
+
+/*
+* directives
+* */
+
+export * from './core/tc-directives/tc-menu.directive'
+export * from './core/tc-directives/tc-directives.module'

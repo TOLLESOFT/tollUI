@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TcPopOverDirective } from './tc-pop-over.directive';
+import {TcMenuDirective} from "./tc-menu.directive";
 
 
 
 @NgModule({
     declarations: [
-        TcPopOverDirective
+        TcMenuDirective
     ],
     exports: [
-        TcPopOverDirective
+        TcMenuDirective
     ],
     imports: [
         CommonModule
