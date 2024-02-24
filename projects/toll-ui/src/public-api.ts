@@ -154,6 +154,12 @@ export * from './core/tc-alert/alert/alert.component'
 export * from './core/tc-indeterminate-progress/tc-indeterminate-progress.component'
 export * from  './core/tc-indeterminate-progress/tc-indeterminate-progress.module'
 
+/*
+* Steps
+* */
+export * from  './core/tc-steps/tc-steps.module'
+export * from './core/tc-steps/steps/steps.component'
+
 
 /*
 * directives

@@ -12,7 +12,7 @@ import {
 
 })
 export class TableComponent implements OnChanges{
-  @Input() data: Array<any>[] = [];
+  @Input() data: any[] = [];
   @Input() fullScreen: boolean = false;
   mainData: any[] = [];
 
