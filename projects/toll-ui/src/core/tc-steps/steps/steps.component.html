@@ -1,10 +1,10 @@
 <div class="flex w-full items-center justify-between space-x-3">
   <div class="flex items-center w-full" [class.space-x-2]="type === 'detailed'">
     <ng-container *ngFor="let item of steps; let i = index">
-      <hr [class.border-blue-500]="selectedIndex === i || selectedIndex > i && color === 'primary'"
-          [class.border-green-500]="selectedIndex === i || selectedIndex > i && color === 'success'"
-          [class.border-red-500]="selectedIndex === i || selectedIndex > i && color === 'danger'"
-          [class.border-amber-500]="selectedIndex === i || selectedIndex > i && color === 'warning'"
+      <hr [class.border-blue-500]="selectedIndex === i && color === 'primary' || selectedIndex > i && color === 'primary'"
+          [class.border-green-500]="selectedIndex === i && color === 'success' || selectedIndex > i && color === 'success'"
+          [class.border-red-500]="selectedIndex === i && color === 'danger' || selectedIndex > i && color === 'danger'"
+          [class.border-amber-500]="selectedIndex === i && color === 'warning' || selectedIndex > i && color === 'warning'"
           class="w-full border-[2px]">
       <div *ngIf="type === 'detailed'"
            [class.bg-blue-500]="selectedIndex === i || selectedIndex > i && color === 'primary'"

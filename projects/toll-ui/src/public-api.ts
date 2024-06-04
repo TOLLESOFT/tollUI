@@ -27,6 +27,14 @@ export * from './core/tc-check-box/tc-check-box.module'
 export * from './core/tc-check-box/check-box/check-box.component'
 
 /**
+ * radio button
+ */
+export * from './core/tc-radio/tc-radio.module'
+export * from './core/tc-radio/tc-radio-group/tc-radio-group.component'
+export * from './core/tc-radio/radio-button/radio-button.component'
+export * from './core/tc-radio/radio-button.service'
+
+/**
  * modal component
  */
 export * from './core/tc-modal/modal-ref'
