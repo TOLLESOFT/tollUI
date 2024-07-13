@@ -1,6 +1,6 @@
 {
     "name": "toll-ui",
-    "version": "2.1.4",
+    "version": "3.0.0",
     "peerDependencies": {
         "@angular/cdk": "^18.1.0",
         "@angular/common": "^18.1.0",
