@@ -2,9 +2,9 @@
     "name": "toll-ui",
     "version": "2.1.4",
     "peerDependencies": {
-        "@angular/cdk": "^17.2.0",
-        "@angular/common": "^17.2.1",
-        "@angular/core": "^17.2.1",
+        "@angular/cdk": "^18.1.0",
+        "@angular/common": "^18.1.0",
+        "@angular/core": "^18.1.0",
         "scss-bundle": "^3.1.2"
     },
     "dependencies": {
@@ -14,9 +14,9 @@
         "packagr": "ng-packagr -p ng-package.json"
     },
     "devDependencies": {
-        "autoprefixer": "^10.4.13",
-        "ng-packagr": "^17.2.0",
-        "postcss": "^8.4.19",
-        "tailwindcss": "^3.4.1"
+        "autoprefixer": "^10.4.19",
+        "ng-packagr": "^18.1.0",
+        "postcss": "^8.4.39",
+        "tailwindcss": "^3.4.4"
     }
 }
