@@ -6,15 +6,18 @@ import {computePosition, flip, offset, shift} from "@floating-ui/dom";
 })
 export class TcMenuDirective implements AfterViewInit{
   @Input() menu!: HTMLElement;
+  @Input() position : 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' = 'bottom-end';
+  @Input() padding = 6;
+  @Input() offSet = 6;
   constructor(private el: ElementRef) { }
 
   contextMenu() {
     computePosition(this.el.nativeElement, this.menu, {
-      placement: 'bottom-end',
+      placement: this.position,
       middleware: [
         flip(),
-        offset(6),
-        shift({padding: 6})
+        offset(this.offSet),
+        shift({padding: this.padding})
       ]
     }).then(({x, y}) => {
       Object.assign(this.menu.style, {
