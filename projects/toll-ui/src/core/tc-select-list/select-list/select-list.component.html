@@ -1,0 +1,56 @@
+<div class="relative w-full {{disabled && 'pointer-events-none'}}" [id]="mainId">
+  <ng-container *ngIf="label">
+    <label [for]="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+      {{label}}
+      <ng-container *ngIf="required">
+        <span class="text-red-600 text-lg">*</span>
+      </ng-container>
+    </label>
+  </ng-container>
+    <div class="relative">
+        <input placeholder="{{placeholder}}" [id]="id"
+               [readOnly]="!searchable"
+               [(ngModel)]="displayLabel"
+               [disabled]="disabled"
+               (focus)="focus()"
+               (blur)="blur()"
+               (ngModelChange)="searchList($event)"
+               select-list="tc-select-list"
+               class="{{defaultClass}} disabled:bg-gray-200 group {{invalid ? (required ? invalidClass: inputValidClass) : inputValidClass}} {{size === 'small' && smallSize}} {{size === 'normal' && defaultSize}} {{size === 'large' && largeSize}}"/>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3 {{allowClear && (displayLabel ? null : 'pointer-events-none')}}">
+            <div class="flex space-x-2 items-center">
+              <ng-container *ngIf="allowClear">
+                <i *ngIf="displayLabel" (click)="clearItem()" class="pi pi-times text-gray-500 text-xs cursor-pointer"></i>
+              </ng-container>
+                <i class="pi pi-chevron-down text-gray-500 text-xs {{hasFocus && 'rotate-180'}}" ></i>
+            </div>
+        </div>
+    </div>
+
+    <div [id]="dropItemId" class="absolute border mt-2 rounded-lg min-w-full max-h-[300px] overflow-auto divide-y bg-white z-10 select-list-container shadow-2xl {{id}} hidden" >
+        <ng-container *ngIf="showAddButton">
+            <div *ngIf="transformedData.length === 0" class="p-2 flex space-x-2 cursor-pointer items-center" (click)="addNew()">
+                <i class="pi pi-plus"></i>
+                <span class="block text-lg w-52 truncate" *ngIf="displayLabel">{{displayLabel}}</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="templateMode; else dropList">
+          <ng-content select="tc-select-list-option"></ng-content>
+        </ng-container>
+        <ng-container *ngIf="transformedData.length === 0">
+            <div class="py-6 cursor-pointer text-center">
+                <span class="text-[14px] leading-[16px] font-[400]">List is empty</span>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #dropList>
+  <ng-container *ngIf="transformedData.length > 0">
+    <ng-container *ngFor="let item of transformedData">
+      <div (click)="selectItem(item)" class="p-2 cursor-pointer hover:bg-gray-200" [class.bg-gray-200]="displayValue === item.id">
+        <span class="text-[14px] leading-[16px] font-[400]">{{item.value}}</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,22 @@
+<div class="flex flex-col w-full {{fullScreen && 'h-full'}} overflow-auto bg-white">
+  <div *ngIf="showPagination" class="flex h-auto justify-end w-full p-4">
+    <tc-pagination
+      [pageSize]="pageSize"
+      [pageNumber]="pageNumber"
+      [totalPages]="totalPages"
+      [totalRecords]="totalRecords"
+      (pageNumberChange)="pageNumberChangeEvent($event)"
+      (pageSizeChange)="pageSizeChangeEvent($event)"
+    ></tc-pagination>
+  </div>
+  <div class="grow h-full w-full {{showPagination && 'overflow-auto'}}">
+    <div class="relative overflow-x-auto h-full">
+      <table tcTable>
+        <ng-content></ng-content>
+      </table>
+      <div *ngIf="data.length === 0" class="w-full flex h-[40%] justify-center items-center">
+        <img *ngIf="image" [src]="image" class="w-32">
+      </div>
+    </div>
+  </div>
+</div>

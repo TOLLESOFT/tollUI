@@ -1,0 +1,221 @@
+<ng-container *ngIf="calendarType === 'full'">
+    <div class="relative flex flex-col w-full h-full border rounded p-2">
+        <div class="flex justify-between items-center">
+            <div class="space-x-1 flex items-center">
+                <tc-icon-button size="small" icon="tc tc-arrow-left" (click)="GetPreviousMonth()">
+                </tc-icon-button>
+                <tc-icon-button size="small" icon="tc tc-arrow-right" (click)="GetNextMonth()">
+                </tc-icon-button>
+                <tc-button (click)="setToday()" size="small">
+                    today
+                </tc-button>
+            </div>
+            <label class="font-bold">{{monthYear}}</label>
+            <div class="space-x-1 flex items-center">
+                <tc-button size="small">
+                    month
+                </tc-button>
+                <tc-button size="small">
+                    week
+                </tc-button>
+                <tc-button size="small">
+                    day
+                </tc-button>
+            </div>
+        </div>
+        <div class="grid grid-cols-7 mt-4">
+            <ng-container *ngFor="let days of AllDays">
+                <div class="min-w-full h-10 border flex items-center justify-center">
+                    <span class="text-xs font-bold">{{days.slice(0,3)}}</span>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngFor="let dates of weeks; let i = index">
+            <ng-container *ngIf="dates.week !== null">
+                <div class="grid grid-cols-7">
+                    <ng-container *ngFor="let date of dates.dates">
+                        <div #element class="min-w-full border group" [ngStyle]="{'min-height': element.clientWidth+'px'}">
+                            <ng-container *ngIf="date !== null" >
+                                <div class="flex flex-col w-full h-full group-hover:cursor-pointer"
+                                     [class.bg-blue-200]="getToday(date)">
+                                    <div class="flex justify-end p-1 group-hover:cursor-pointer">
+                                        {{GetDate(date)}}
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>
+<ng-container>
+    <div class="relative flex">
+        <ng-container *ngIf="smallCalendarView === 'month'">
+            <div class="divide-y">
+              <div class="flex items-center justify-between w-full divide-x">
+                <div (click)="GetPreviousMonth()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <i  class="text-[13px] fa fa-chevron-left"></i>
+                </div>
+                <div (click)="GetNextMonth()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <i  class="text-[13px] fa fa-chevron-right"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between w-full divide-x">
+                <div (click)="smallCalendarView = 'all month'" class="w-full flex justify-center group p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="block text-[13px] group-hover:cursor-pointer">{{AllMonths[currentDate.getMonth()]}}</label>
+                </div>
+                <div (click)="smallCalendarView = 'year'" class="w-full flex cursor-pointer group justify-center p-2 hover:bg-blue-600 hover:text-white">
+                  <label  class=" block text-[13px] group-hover:cursor-pointer">{{selectedYear}}</label>
+                </div>
+              </div>
+                <div class="h-auto flex items-center">
+                    <ng-container *ngFor="let days of AllDays">
+                        <div class="w-10 h-10 flex items-center justify-center">
+                            <span class="leading-none block text-gray-400 text-[12px]">{{days.slice(0,1)}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="border-gray-300 overflow-hidden divide-y">
+                    <ng-container *ngFor="let dates of weeks; let i = index">
+                        <ng-container *ngIf="dates.week !== null">
+                            <div class="flex">
+                                <ng-container *ngFor="let date of dates.dates">
+                                    <ng-container *ngIf="date" >
+                                        <div class="w-10 h-10 flex items-center justify-center">
+                                            <ng-container *ngIf="(selectedDate | date : 'MM/dd/yyyy') !== (date | date: 'MM/dd/yyyy'); else thisIsSelectedDate">
+                                                <ng-container *ngIf="disablePastDates; else pastDateAllowed">
+                                                    <ng-container *ngIf="compareDate(date); else isNotDisabled">
+                                                        <div class="w-8 h-8 flex items-center justify-center hover:cursor-not-allowed">
+                                                            <span class="text-[14px] leading-none text-gray-400">{{date | date: 'dd'}}</span >
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-template #isNotDisabled>
+                                                      <ng-container *ngIf="date.getMonth() !== currentDate.getMonth(); else isCurrent">
+                                                        <div class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                          <span class="text-[14px] leading-none text-gray-400">{{date | date: 'dd'}}</span >
+                                                        </div>
+                                                      </ng-container>
+                                                      <ng-template #isCurrent>
+                                                        <div (click)="selectDate(date)"
+                                                             [class.rounded-full]="getToday(date)"
+                                                             [class.bg-blue-200]="getToday(date)" class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                          <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                        </div>
+                                                      </ng-template>
+                                                    </ng-template>
+                                                </ng-container>
+                                                <ng-template #pastDateAllowed>
+                                                  <ng-container *ngIf="date.getMonth() !== currentDate.getMonth(); else isCurrent">
+                                                    <div class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                      <span class="text-[14px] leading-none text-gray-400">{{date | date: 'dd'}}</span >
+                                                    </div>
+                                                  </ng-container>
+                                                  <ng-template #isCurrent>
+                                                    <div (click)="selectDate(date)"
+                                                         [class.rounded-full]="getToday(date)"
+                                                         [class.bg-blue-200]="getToday(date)" class="w-8 h-8 flex items-center justify-center hover:cursor-pointer">
+                                                      <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                    </div>
+                                                  </ng-template>
+                                                </ng-template>
+                                            </ng-container>
+                                           <ng-template #thisIsSelectedDate>
+                                               <ng-container *ngIf="disablePastDates; else isNotDisablePassDateSelected">
+                                                   <ng-container *ngIf="compareDate(date); else isNotDisabledSelected">
+                                                       <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-not-allowed">
+                                                           <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                       </div>
+                                                   </ng-container>
+                                                   <ng-template #isNotDisabledSelected>
+                                                       <div (click)="selectDate(date)" class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-pointer">
+                                                           <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                       </div>
+                                                   </ng-template>
+                                               </ng-container>
+                                               <ng-template #isNotDisablePassDateSelected>
+                                                   <div (click)="selectDate(date)" class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white hover:cursor-pointer">
+                                                       <span class="text-[14px] leading-none">{{date | date: 'dd'}}</span >
+                                                   </div>
+                                               </ng-template>
+                                           </ng-template>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="flex justify-between p-2 mt-2 items-center">
+                    <span class="block text-[13px] ">today: {{today | date : 'MM/dd/yyyy'}}</span>
+                    <tc-button (click)="setToday()" size="extra small">today</tc-button>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="smallCalendarView === 'all month'">
+          <div class="divide-y" [ngStyle]="{'width': 78*3+16 +'px'}">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center justify-between w-full divide-x" *ngIf="this.dateView === 'month'">
+                <div class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="cursor-pointer block text-[13px]">{{AllMonths[currentDate.getMonth()]}}</label>
+                </div>
+                <div (click)="smallCalendarView = 'year'" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+                  <label class="cursor-pointer block text-[13px]">{{selectedYear}}</label>
+                </div>
+              </div>
+              <div (click)="smallCalendarView = 'month'" class="flex items-center p-1" *ngIf="this.dateView !== 'month'">
+                <label class="hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white p-1 block text-[13px]">
+                  BACK
+                </label>
+              </div>
+            </div>
+            <div class="border-gray-300 overflow-hidden w-full ">
+              <div class="grid grid-cols-3 w-full p-2">
+                <ng-container *ngFor="let month of AllMonths; let i = index">
+                  <div [class.text-blue-600]="i === monthCount-1"
+                       class="w-[78px] h-[78px] flex items-center justify-center hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white" (click)="selectMonth(month)">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                      <span class="text-[14px] leading-none">{{month.slice(0,3)}}</span >
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+      <ng-container *ngIf="smallCalendarView === 'year'">
+        <div class="divide-y" [ngStyle]="{'width': 78*4 +'px'}">
+          <div class="flex items-center justify-between w-full divide-x">
+            <div class="flex p-1 items-center">
+              <label (click)="updateView('month')" class="hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white p-1 block text-[13px]">
+                BACK
+              </label>
+            </div>
+          </div>
+          <div class="flex items-center justify-between w-full divide-x">
+            <div (click)="GetPreviousYears()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+              <i  class="text-[13px] fa fa-chevron-left"></i>
+            </div>
+            <div (click)="GetNextYears()" class="w-full flex justify-center cursor-pointer p-2 hover:bg-blue-600 hover:text-white">
+              <i  class="text-[13px] fa fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <div class="border-gray-300 overflow-hidden w-full">
+            <div class="grid grid-cols-4 w-full p-2">
+              <ng-container *ngFor="let year of years">
+                <div [class.text-blue-600]="selectedYear === year" class="w-[78px] h-[78px] flex items-center justify-center hover:cursor-pointer hover:bg-blue-600 hover:rounded hover:text-white" (click)="selectYear(year); updateView('month')">
+                  <div class="'w-8 h-8 flex items-center justify-center">
+                    <span class='text-[14px] leading-none'>{{year}}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+</ng-container>

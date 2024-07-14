@@ -1,0 +1,13 @@
+<div class="w-auto flex cursor-pointer">
+  <ng-container *ngFor="let tab of tabItems; let i = index">
+    <div class="px-10 py-5 border-b-4"
+         (click)="onSelected(i)"
+         [class.border-white]="i !== selectedIndex"
+         [class.border-red-500]="i === selectedIndex && type === 'danger'"
+         [class.border-amber-500]="i === selectedIndex && type === 'warning'"
+         [class.border-green-500]="i === selectedIndex && type === 'success'"
+         [class.border-blue-500]="i === selectedIndex && type === 'primary'">
+      {{tab}}
+    </div>
+  </ng-container>
+</div>

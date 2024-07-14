@@ -1,0 +1,82 @@
+<ng-container *ngIf="service.singleView; else allAlerts">
+  <div [class.animate__slideOutRight]="service.clear"
+       [class.animate__slideInRight]="service.alert !== undefined"
+       *ngIf="service.alert !== undefined" class="fixed top-0 right-0 p-4 flex flex-col items-center z-[1000] animate__animated animate__faster">
+    <div *ngIf="service.alerts.length > 1"
+         [class.border-blue-300]="service.alert?.type === 'info' || service.alert.type === 'success'"
+         [class.border-red-600]="service.alert?.type === 'danger'"
+         [class.border-yellow-500]="service.alert?.type === 'warning'"
+         class="p-4 mb-4 text-blue-800 border rounded-lg bg-blue-50 w-[23rem]" role="alert">
+
+    </div>
+    <div [class.border-blue-300]="service.alert?.type === 'info' || service.alert.type === 'success'"
+         [class.border-red-600]="service.alert?.type === 'danger'"
+         [class.border-yellow-500]="service.alert?.type === 'warning'"
+         class="p-4 mb-4 text-blue-800 border rounded-lg bg-blue-50 w-96 {{service.alerts.length > 1 && '-mt-11'}}" role="alert">
+      <div class="flex items-center space-x-2">
+        <i *ngIf="service.alert?.type === 'info'" class="fa-solid fa-circle-info text-2xl"></i>
+        <i *ngIf="service.alert?.type === 'success'" class="fa-solid fa-check-circle text-2xl"></i>
+        <i *ngIf="service.alert?.type === 'warning'" class="fa-solid fa-triangle-exclamation text-yellow-500 text-2xl"></i>
+        <i *ngIf="service.alert?.type === 'danger'" class="fa-solid fa-times-circle text-red-600 text-2xl"></i>
+        <span class="sr-only">Info</span>
+        <h3 *ngIf="service.alert?.title" class="text-lg font-medium">{{service.alert.title}}</h3>
+      </div>
+      <div class="mt-2 mb-4 text-sm">
+        {{service.alert?.message}}
+      </div>
+      <div class="flex justify-between items-center">
+        <div class="flex space-x-2">
+          <button *ngIf="service.alerts.length > 1" (click)="service.toggleView()" type="button" TcButton color="blue" class="flex items-center" size="extra small">
+            <svg class="-ml-0.5 mr-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+              <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+            </svg>
+            View more
+          </button>
+          <button (click)="service.clearAlert()" type="button" TcButton color="blue" outline size="extra small">
+            Dismiss
+          </button>
+        </div>
+        <button *ngIf="service.alerts.length > 1" (click)="service.clearAlerts()" type="button" TcButton color="primary" outline size="extra small">
+          Dismiss all
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #allAlerts>
+  <div class="fixed top-0 right-0 bottom-0 p-4 flex flex-col h-auto items-center space-y-4 z-[1000] animate__animated animate__faster">
+    <div class="h-auto w-96 flex justify-between" *ngIf="service.alerts.length > 0">
+      <button (click)="service.toggleView()" type="button" TcButton color="blue" outline size="extra small">
+        Collapse
+      </button>
+      <button (click)="service.clearAlerts()" type="button" TcButton color="blue" outline size="extra small">
+        Dismiss all
+      </button>
+    </div>
+    <div class="grow space-y-4 alert-scroll">
+      <ng-container *ngFor="let alertItem of service.alerts; let i = index">
+        <div [class.border-blue-300]="alertItem.type === 'info' || alertItem.type === 'success'"
+             [class.border-red-600]="alertItem.type === 'danger'"
+             [class.border-yellow-500]="alertItem.type === 'warning'"
+             class="p-4 text-blue-800 border rounded-lg bg-blue-50 w-96 transform ease-in-out duration-1000" role="alert">
+          <div class="flex items-center space-x-2">
+              <i *ngIf="alertItem.type === 'info'" class="fa-solid fa-circle-info text-2xl"></i>
+            <i *ngIf="alertItem.type === 'success'" class="fa-solid fa-check-circle text-2xl"></i>
+            <i *ngIf="alertItem.type === 'warning'" class="fa-solid fa-triangle-exclamation text-yellow-500 text-2xl"></i>
+            <i *ngIf="alertItem.type === 'danger'" class="fa-solid fa-times-circle text-red-600 text-2xl"></i>
+            <span class="sr-only">Info</span>
+            <h3 *ngIf="alertItem.title" class="text-lg font-medium">{{alertItem.title}}</h3>
+          </div>
+          <div class="mt-2 mb-4 text-sm">
+            {{alertItem.message}}
+          </div>
+          <div class="flex">
+            <button (click)="service.clearAlert()" type="button" TcButton color="blue" outline size="extra small">
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
