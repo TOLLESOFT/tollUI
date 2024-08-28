@@ -43,10 +43,6 @@ export class ModalComponent implements OnInit, AfterViewInit {
         this.ref.open(this.content);
     }
 
-  close() {
-    this.ref.close(null);
-  }
-
   ngOnInit(): void {
     this.content = this.ref.modal.content;
     this.modalSize = this.ref.modal.size;
@@ -86,6 +82,4 @@ export class ModalComponent implements OnInit, AfterViewInit {
       this.contentType = 'component';
     }
   }
-
-  protected readonly undefined = undefined;
 }

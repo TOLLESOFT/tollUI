@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class LoaderComponent implements OnInit {
   @Input() show = false;
   @Input() loadingMessage = '';
+  @Input() iconData = '';
   constructor() { }
 
   ngOnInit(): void {

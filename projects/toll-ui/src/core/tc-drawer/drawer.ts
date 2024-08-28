@@ -7,4 +7,5 @@ export class Drawer<T> {
     position?: 'left' | 'right' ;
     backdropClose?: boolean;
     title?: string;
+    closeIcon?:string;
 }

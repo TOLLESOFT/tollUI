@@ -12,7 +12,7 @@ export class DrawerService {
   open<R = any, T = any>(drawer: Drawer<T>): DrawerRef<R> {
     const configs = new OverlayConfig({
       hasBackdrop: true,
-      backdropClass: ['backdrop-blur-[6px]', 'bg-gray-400/30', 'fixed', 'inset-0']
+      backdropClass: ['backdrop-blur-[6px]', 'bg-gray-400/30', 'fixed', 'inset-0', 'z-[999]']
     });
 
     const overlayRef = this.overlay.create(configs);

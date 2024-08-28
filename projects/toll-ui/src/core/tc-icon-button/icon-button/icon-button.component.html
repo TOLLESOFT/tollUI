@@ -9,7 +9,7 @@
 {{ size === 'normal' ? normal : '' }}
 {{ rounded === 'full' ? 'rounded-full' : 'rounded-lg' }}
 {{button_color()}} ">
-  <i class="{{icon}}"></i>
+  <i class="{{icon}}"><ng-content></ng-content></i>
 </button>
 
 <!--<div role="tooltip"-->

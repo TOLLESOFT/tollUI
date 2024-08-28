@@ -15,6 +15,7 @@ import {BaseService} from "../../base.service";
 import {SearchItem} from "../search-item";
 import {fromEvent, Subscription} from "rxjs";
 import {SelectListService} from "../select-list.service";
+import {data} from "autoprefixer";
 
 @Component({
     selector: 'tc-select-list',
@@ -51,9 +52,9 @@ export class SelectListComponent implements OnInit, ControlValueAccessor, AfterV
     defaultSize = 'p-2.5 text-sm';
     smallSize = 'p-2 sm:text-xs';
     largeSize = 'p-4 sm:text-md';
-    defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white';
-    inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-400 dark:border-gray-500';
-    invalidClass = 'focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 border border-red-500 dark:border-red-600';
+    defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full';
+    inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 border border-gray-300';
+    invalidClass = 'focus:ring-red-500 focus:border-red-500 border border-red-500';
 
     subscriptions: Subscription[] = [];
     onChange = (value: any | null) => {
@@ -65,7 +66,7 @@ export class SelectListComponent implements OnInit, ControlValueAccessor, AfterV
     selectedItem?: SearchItem;
     displayLabel = '';
     displayValue: any;
-    @Input() dataLabel: any;
+    @Input() dataLabel: string = '';
     @Input() dataId: any;
     @Input() disabled = false;
     hasFocus = false;
@@ -103,14 +104,37 @@ export class SelectListComponent implements OnInit, ControlValueAccessor, AfterV
     //     }
     // }
 
+    getValue = (item: any ,value: any[]):any => {
+        let result;
+        for (let i = 0; i < value.length; i++) {
+            if (!result) {
+                result = item?.[value[i]]
+            } else {
+                result = result?.[value[i]]
+            }
+        }
+        return result;
+    }
+
     ngOnInit(): void {
         this.service.selected.subscribe({
             next: value => {
-                this.displayLabel = value[this.dataLabel];
-                this.displayValue = value[this.dataId]
+                console.log(value);
+                let item = this.data.find(u => u.id === value);
+                let label = '';
+                this.dataLabel.split(' ').forEach(m => {
+                    if (m.includes('.')) {
+                        label = `${label} ${this.getValue(item, m.split('.'))}`
+                    } else {
+                        label = `${label} ${item[m]}`
+                    }
+                });
+                this.displayLabel = label.trim();
+                this.displayValue = value
                 this.onChange(value);
             }
         })
+
         if (this.data?.length > 0) {
             this.transformedData = this.data.map(u => {
                 return <SearchItem>{ id: (this.dataId) ? u[this.dataId] : u, value: (this.dataLabel) ? u[this.dataLabel] : u }

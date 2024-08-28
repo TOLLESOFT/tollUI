@@ -36,6 +36,7 @@ export class DrawerComponent implements OnInit, AfterViewInit {
     context: any;
     title?: string;
     open = true;
+    closeIcon?:string;
     constructor(private ref: DrawerRef) {
         this.ref.afterClosed$.subscribe({
             next: value => {
@@ -46,11 +47,6 @@ export class DrawerComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.ref.open(this.content);
-    }
-
-    close() {
-        this.open = false;
-        this.ref.close(null);
     }
 
     ngOnInit(): void {
@@ -66,6 +62,9 @@ export class DrawerComponent implements OnInit, AfterViewInit {
             this.backdropClose = true;
         } else {
             this.backdropClose = this.ref.drawer.backdropClose;
+        }
+        if (this.ref.drawer.closeIcon) {
+            this.closeIcon = this.ref.drawer.closeIcon;
         }
 
         if (typeof this.content === 'string') {

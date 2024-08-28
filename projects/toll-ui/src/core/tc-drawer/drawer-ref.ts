@@ -10,11 +10,13 @@ export class DrawerRef<R = any, T = any> {
         private overlay: OverlayRef,
         public drawer: Drawer<T>
     ) {
-      overlay.backdropClick().subscribe({
-        next: (_) => {
-          this._close('backdropClick', null);
-        }
-      })
+        overlay.backdropClick().subscribe({
+            next: (_) => {
+                if (drawer.backdropClose) {
+                    this._close('backdropClick', null);
+                }
+            }
+        })
     }
 
     close(data?: R) {
@@ -26,15 +28,15 @@ export class DrawerRef<R = any, T = any> {
     }
 
     private _close(type: 'backdropClick' | 'close', data: R | undefined | null) {
-      this.afterClosed$.next({
-        type,
-        data
-      });
-        this.afterClosed$.complete();
-      timer(200).subscribe({
-        next:(() => {
-          this.overlay.dispose();
+        this.afterClosed$.next({
+            type,
+            data
+        });
+        timer(200).subscribe({
+            next:(() => {
+                this.overlay.dispose();
+                this.afterClosed$.complete();
+            })
         })
-      })
     }
 }

@@ -45,9 +45,9 @@ export class MultiSelectListComponent implements OnInit, ControlValueAccessor, A
   defaultSize = 'p-2.5 text-sm';
   smallSize = 'p-2 sm:text-xs';
   largeSize = 'p-4 sm:text-md';
-  defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white';
-  inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-400 dark:border-gray-500';
-  invalidClass = 'focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 border border-red-500 dark:border-red-600'
+  defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full';
+  inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 border border-gray-300';
+  invalidClass = 'focus:ring-red-500 focus:border-red-500 border border-red-500 dark:border-red-600'
   onChange = (value: any | null) => {};
   onTouched = (value: any | null) => {};
   newList: Array<SearchItem> = [];

@@ -6,7 +6,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
     styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnChanges{
-    @Input() type: 'primary' | 'success' | 'danger' | 'warning' | 'info' = 'danger';
+    @Input() type: 'primary' | 'success' | 'danger' | 'warning' | 'info' = 'primary';
     @Input() pageSize = 10
     @Input() pageNumber = 1;
     @Input() totalPages = 0;

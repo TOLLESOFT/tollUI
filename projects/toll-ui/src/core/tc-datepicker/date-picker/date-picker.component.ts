@@ -46,12 +46,12 @@ export class DatePickerComponent implements OnInit, AfterViewInit, ControlValueA
   currentValue = '';
 
 
-  defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white';
+  defaultClass = 'bg-gray-50 focus:outline-none text-gray-900 rounded-lg block w-full';
   defaultSize = 'p-2.5 text-sm';
   smallSize = 'p-2 sm:text-xs';
   largeSize = 'p-4 sm:text-md';
-  inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-400 dark:border-gray-500';
-  invalidClass = 'focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500 border border-red-500 dark:border-red-600'
+  inputValidClass = 'focus:ring-blue-500 focus:border-blue-500 border border-gray-300';
+  invalidClass = 'focus:ring-red-500 focus:border-red-500 border border-red-500'
 
   dateValue = new Date();
   mainId = BaseService.uuid();
