@@ -11,7 +11,7 @@ import {
     styleUrls: ['./table.component.scss']
 
 })
-export class TableComponent implements OnChanges{
+export class TableComponent implements OnChanges {
     @Input() data: any[] = [];
     @Input() fullScreen: boolean = false;
     mainData: any[] = [];

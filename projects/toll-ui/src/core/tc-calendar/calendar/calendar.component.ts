@@ -58,6 +58,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
         'NOVEMBER',
         'DECEMBER',
     ];
+
     constructor() {
     }
 
